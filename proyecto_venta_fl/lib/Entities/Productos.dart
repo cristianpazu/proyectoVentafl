@@ -10,7 +10,7 @@ class Productos {
 
  int? precioCompra;
 
- DateTime? fechaIngreso;
+ String? fechaIngreso;
 
  String? observacion;
 
@@ -23,12 +23,12 @@ factory Productos.fromJson(Map<String, dynamic> json ) => Productos(
   id: json["id"]?? 0, 
   nombre: json["nombre"]?? "", 
   referencia: json["referencia"]?? "", 
-  precioCompra: json["precioCompra"]?? 0 , 
-  fechaIngreso: json["fechaIngreso"] != null
-            ? DateTime.tryParse(json["fechaIngreso"])
-            : null,
+  precioCompra: json["precioCompra"]?? 0.0 , 
+  fechaIngreso: json["fechaIngreso"] ?? "",
   observacion: json["observacion"]?? "",
-  categoria: json["categoria"]
+  categoria: (json["categoria"] != null && json["categoria"] is List)
+    ? List<Categoria>.from(json["categoria"].map((x) => Categoria.fromJson(x)))
+    : [],
   );
 
 
@@ -37,9 +37,9 @@ Map<String, dynamic> toJson() => {
   "nombre": nombre,
   "referencia": referencia,
   "precioCompra": precioCompra,
-  "fechaIngreso": fechaIngreso?.toIso8601String(),
+  "fechaIngreso": fechaIngreso,
   "observacion": observacion,
-  "categoria": categoria,
+  "categoria": categoria?.map((x) => x.toJson()).toList(),
 };
 
 Productos copyWith({
@@ -50,7 +50,7 @@ int? id,
 
  int? precioCompra,
 
- DateTime? fechaIngreso,
+ String? fechaIngreso,
 
  String? observacion,
 

@@ -1,4 +1,3 @@
-
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
 import 'package:proyecto_venta_fl/domain/datasource/producto_datasource.dart';
 import 'package:proyecto_venta_fl/mappers/producto_mapper.dart';
@@ -13,23 +12,24 @@ class ProductosDatasourceImpl extends ProductoDatasource {
   }
 
   @override
-  Future<List<Productos>> getAllProductos() async{
-    
+  Future<List<Productos>> getAllProductos() async {
     try {
-      final  respuesta =
-          await HttpService(Baseurl.consultarProductos).getHttp();
-           
-      final List<Productos> productos = [];
+      final respuesta = await HttpService(Baseurl.consultarProductos).getHttp();
 
-      for (var element in respuesta ?? []) {
-        
-  productos.add(ProductoMapper.jsonToEntity(element));
+      final List<Productos> productos = [];
+ 
+
+      print('object respuesta $respuesta');
+    for (var element in respuesta ?? []) {
+      print('object element $element');
+     
+        productos.add(ProductoMapper.jsonToEntity(element));
       }
 
+      print('object $productos');
 
       return productos;
 
- 
 /*
  if (respuesta != null && respuesta is List) {
       // Parsear la lista de productos
@@ -37,14 +37,10 @@ class ProductosDatasourceImpl extends ProductoDatasource {
     } else {
       return [];
     } */
-
     } catch (e) {
-       print('Error: $e');
+      print('Error: $e');
       return []; // O puedes lanzar una excepción si prefieres
     }
-
-
- 
   }
 
   @override
@@ -52,6 +48,4 @@ class ProductosDatasourceImpl extends ProductoDatasource {
     // TODO: implement getProductosById
     throw UnimplementedError();
   }
- }
-
-
+}

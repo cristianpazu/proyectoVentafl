@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 import 'package:proyecto_venta_fl/utils/baseUrl.dart';
 import 'package:proyecto_venta_fl/utils/http.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: const DioExamplePage(),
+      home: const ProductosView(),
     );
   }
 }

@@ -11,7 +11,9 @@ referencia: json['referencia'],
 precioCompra: json['precioCompra'],
 fechaIngreso: json['fechaIngreso'],
 observacion: json['observacion'],
-categoria: CategoriaMapper.jsonToEntityMapper(json['categoria'])
+categoria:  json['categoria'] != null
+        ? CategoriaMapper.jsonToEntityMapper(json['categoria'])
+        : null, // Permite categoria null en Productos
 
 );
 
