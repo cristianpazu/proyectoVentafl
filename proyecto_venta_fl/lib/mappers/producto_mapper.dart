@@ -8,7 +8,8 @@ static jsonToEntity(Map<String, dynamic> json )=> Productos(
 id: json['id'],
 nombre: json['nombre'],
 referencia: json['referencia'],
-precioCompra: json['precioCompra'],
+cantidadStock: json['cantidadStock'],
+precioVenta: json['precioVenta'],
 fechaIngreso: json['fechaIngreso'],
 observacion: json['observacion'],
 categoria:  json['categoria'] != null

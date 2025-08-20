@@ -8,7 +8,9 @@ class Productos {
 
  String? referencia;
 
- int? precioCompra;
+ int? cantidadStock;
+
+ int? precioVenta;
 
  String? fechaIngreso;
 
@@ -16,14 +18,15 @@ class Productos {
 
  List<Categoria>? categoria;
 
-Productos({this.id, this.nombre, this.referencia, this.precioCompra, this.fechaIngreso, this.observacion, this.categoria});
+Productos({this.id, this.nombre, this.referencia, this.cantidadStock ,this.precioVenta, this.fechaIngreso, this.observacion, this.categoria});
 
 
 factory Productos.fromJson(Map<String, dynamic> json ) => Productos(
   id: json["id"]?? 0, 
   nombre: json["nombre"]?? "", 
   referencia: json["referencia"]?? "", 
-  precioCompra: json["precioCompra"]?? 0.0 , 
+  cantidadStock: json["cantidadStock"] ?? 0,
+  precioVenta: json["precioVenta"]?? 0.0 , 
   fechaIngreso: json["fechaIngreso"] ?? "",
   observacion: json["observacion"]?? "",
   categoria: (json["categoria"] != null && json["categoria"] is List)
@@ -36,7 +39,8 @@ Map<String, dynamic> toJson() => {
   "id": id,
   "nombre": nombre,
   "referencia": referencia,
-  "precioCompra": precioCompra,
+  "cantidadStock": cantidadStock,
+  "precioVenta": precioVenta,
   "fechaIngreso": fechaIngreso,
   "observacion": observacion,
   "categoria": categoria?.map((x) => x.toJson()).toList(),
@@ -47,8 +51,8 @@ int? id,
    String? nombre,
 
  String? referencia,
-
- int? precioCompra,
+ int? cantidadStock,
+ int? precioVenta,
 
  String? fechaIngreso,
 
@@ -60,7 +64,8 @@ int? id,
 id: id ?? this.id,
 nombre: nombre ?? this.nombre,
 referencia: referencia ?? this.referencia,
-precioCompra: precioCompra ?? this.precioCompra,
+cantidadStock: cantidadStock ?? this.cantidadStock,
+precioVenta: precioVenta ?? this.precioVenta,
 fechaIngreso: fechaIngreso ?? this.fechaIngreso,
 observacion: observacion ?? this.observacion,
 categoria: categoria ?? this.categoria
