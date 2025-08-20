@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 import 'package:proyecto_venta_fl/utils/baseUrl.dart';
 import 'package:proyecto_venta_fl/utils/http.dart';
+import 'package:proyecto_venta_fl/widget/product_card.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));
