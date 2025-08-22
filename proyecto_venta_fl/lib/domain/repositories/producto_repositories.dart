@@ -4,7 +4,7 @@ abstract class ProductoRepositories {
 
    Future<List<Productos>> getAllProductos();
 
-   Future<Productos> getProductosById(int id);
+   Future<Productos> getProductosById(String id);
 
 
   Future<Productos> createUpdateProductos(Map<String, dynamic> productLike);

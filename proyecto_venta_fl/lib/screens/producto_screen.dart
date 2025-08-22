@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_state_notifier.dart';
 
-class ProductoScreen extends ConsumerStatefulWidget {
+class ProductoScreen extends ConsumerWidget {
+final String productoId;
 
-  
-  const ProductoScreen({super.key});
+  const ProductoScreen({super.key, required this.productoId});
 
   @override
- _ProductoScreenState createState() => _ProductoScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _ProductoScreenState extends ConsumerState<ProductoScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
-      body: Text(widget.),
-    );
+final productoState = ref.watch(productoProvider(productoId));
+
+    return Container();
   }
 }

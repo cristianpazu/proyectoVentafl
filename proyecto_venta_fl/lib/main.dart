@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_venta_fl/router/app_router.dart';
 import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 import 'package:proyecto_venta_fl/utils/baseUrl.dart';
 import 'package:proyecto_venta_fl/utils/http.dart';
@@ -16,11 +17,11 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-  final appRouter
+  final appRouter = ref.watch( goRouterProvider);
 
 
     return MaterialApp.router(
-      routerConfig: ,
+      routerConfig: appRouter,
       title: 'Flutter Demo',
      
       debugShowCheckedModeBanner: false,

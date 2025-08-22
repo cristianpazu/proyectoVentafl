@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_venta_fl/notifiers/productos_state_motifier.dart';
+import 'package:proyecto_venta_fl/router/app_router.dart';
 import 'package:proyecto_venta_fl/widget/info_screen.dart';
 import 'package:proyecto_venta_fl/widget/product_card.dart';
 
 class ProductosView extends ConsumerStatefulWidget {
-   final TextEditingController? controller;
+  final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
-  const ProductosView({super.key, this.controller,
-     this.onChanged});
+  const ProductosView({super.key, this.controller, this.onChanged});
 
   @override
   _ProductosViewState createState() => _ProductosViewState();
 }
 
-class _ProductosViewState extends ConsumerState<ProductosView> {
-
-
-  
+class _ProductosViewState extends ConsumerState {
   @override
   void initState() {
     super.initState();
@@ -27,7 +25,6 @@ class _ProductosViewState extends ConsumerState<ProductosView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -55,9 +52,9 @@ class _ProductosViewState extends ConsumerState<ProductosView> {
     final productosState = ref.watch(productosProvider);
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(241,243,244, 1),
+      backgroundColor: Color.fromRGBO(241, 243, 244, 1),
       appBar: AppBar(
-backgroundColor: Color.fromRGBO(241,243,244, 1),
+        backgroundColor: Color.fromRGBO(241, 243, 244, 1),
         title: Center(
             child: Text(
           'Inventory',
@@ -68,42 +65,42 @@ backgroundColor: Color.fromRGBO(241,243,244, 1),
         )),
       ),
       body: Column(
-
         children: [
-
 // Encabezado fijo
-         Padding(
-           padding: const EdgeInsets.all(8.0),
-           child: TextFormField(
-                 controller: widget.controller,
-                 onChanged: widget.onChanged,
-                 decoration: InputDecoration(
-                   hintText: 'Buscar',
-           filled: true,
-           fillColor: Colors.white,
-                 suffixIcon: //Image.asset('assets/buscar.png',width: 78,height: 2,fit: BoxFit.contain,),
-                 Icon(Icons.search_rounded, size: 40,color: Colors.grey,),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)) 
-                 ),
-               ),
-         ),
+          /*   Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: widget.controller,
+              onChanged: widget.onChanged,
+              decoration: InputDecoration(
+                  hintText: 'Buscar',
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixIcon: //Image.asset('assets/buscar.png',width: 78,height: 2,fit: BoxFit.contain,),
+                      Icon(
+                    Icons.search_rounded,
+                    size: 40,
+                    color: Colors.grey,
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20))),
+            ),
+          ), */
 
-           Padding(
-             padding: const EdgeInsets.all(8.0),
-             child: Container(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
               height: 20,
               width: double.infinity,
-                       
-             
               child: Text(
                 'Items',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-                       ),
-           ),
-           SizedBox(height: 10,),
-
-
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
 
           Expanded(
             child: ListView.builder(
@@ -111,15 +108,12 @@ backgroundColor: Color.fromRGBO(241,243,244, 1),
               itemBuilder: (context, index) {
                 final producto = productosState.productos[index];
 
-
-                    print('producto>>>>>>>>>>>>>> ${producto.categoria?[index].nombreCategoria}');
-
-
                 return Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,//Color.fromARGB(123, 0, 16, 236),
+                          color:
+                              Colors.white, //Color.fromARGB(123, 0, 16, 236),
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Slidable(
                         key: ValueKey(
@@ -127,19 +121,16 @@ backgroundColor: Color.fromRGBO(241,243,244, 1),
                         endActionPane: ActionPane(
                           motion: const ScrollMotion(),
                           children: [
-                           
                             SlidableAction(
                               borderRadius: BorderRadius.circular(20),
-                              onPressed: (context) {
-                                 // Acción editar
-                                print('Editar ${producto.nombre}');
-                              },
-                              backgroundColor: const Color.fromRGBO(232, 235, 255, 1),
-                              foregroundColor: const Color.fromRGBO(96, 124, 218, 1),
-                              
+                              onPressed: (context) =>
+                                  context.push('producto/${producto.id}'),
+                              backgroundColor:
+                                  const Color.fromRGBO(232, 235, 255, 1),
+                              foregroundColor:
+                                  const Color.fromRGBO(96, 124, 218, 1),
                               icon: Icons.edit,
                               label: 'Editar',
-                              
                             ),
                           ],
                         ),

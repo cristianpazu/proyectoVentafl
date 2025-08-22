@@ -26,9 +26,8 @@ ProductosRepositoryImpl(this.productoDatasource);
   }
 
   @override
-  Future<Productos> getProductosById(int id) {
-    // TODO: implement getProductosById
-    throw UnimplementedError();
+  Future<Productos> getProductosById(String id) {
+   return productoDatasource.getProductosById(id);
   }
 
 

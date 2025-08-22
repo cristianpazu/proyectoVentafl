@@ -1,0 +1,3 @@
+class ProductosNotFound implements Exception{
+
+}
