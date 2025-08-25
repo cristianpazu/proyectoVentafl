@@ -4,4 +4,6 @@ class Baseurl {
  static final String consultarProductos = '/productos/traerporAll';
   static final String consultarProductoId = '/productos/traerporId/{id}';
 
+
+ static final String consultarCategoria = '/categoria/traerporAll';
 }

@@ -119,15 +119,15 @@ class _ProductosViewState extends ConsumerState {
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Slidable(
                         key: ValueKey(
-                            producto.id), // cada item debe tener una key única
+                            producto.idProductos), // cada item debe tener una key única
                         endActionPane: ActionPane(
                           motion: const ScrollMotion(),
                           children: [
                             SlidableAction(
                               borderRadius: BorderRadius.circular(20),
                               onPressed: (context) {
-                                 print('--------||||||||--------- ${producto.id.toString()}');
-                                  context.push('/producto/${producto.id}');
+                                 print('--------||||||||--------- ${producto.categoriasConcat}');
+                                  context.push('/producto/${producto.idProductos}');
                               },
                               backgroundColor:
                                   const Color.fromRGBO(232, 235, 255, 1),

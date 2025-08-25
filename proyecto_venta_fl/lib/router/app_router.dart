@@ -10,11 +10,21 @@ final goRouterProvider = Provider((ref) {
       builder: (context, state) => ProductosView(),
     ),
     GoRoute(
+  path: '/producto/:id',
+  builder: (context, state) {
+    final idParam = state.params['id'];
+    final productoId = int.tryParse(idParam ?? '') ?? -1; // o lanza error si es obligatorio
+
+    return ProductoScreen(productoId: productoId);
+  },
+)
+   /* GoRoute(
       path: '/producto/:id',
       builder: (context, state) => ProductoScreen(
         productoId: state.params['id'] ?? 'no-id',
+        
       ),
-    )
+    ) */
   ],
   redirect: (context, state) {
     

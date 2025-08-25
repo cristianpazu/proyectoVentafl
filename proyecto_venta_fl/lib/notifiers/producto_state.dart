@@ -1,7 +1,7 @@
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
 
 class ProductoState {
- final String? id;
+ final int? id;
  final Productos? producto;
  final bool isLoading;
  final bool isSaving;
@@ -14,7 +14,7 @@ this.isSaving = false,
 });
 
 ProductoState copyWith({
-  String? id,
+  int? id,
   Productos? producto,
   bool? isLoading,
   bool? isSaving, 

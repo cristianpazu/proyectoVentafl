@@ -1,8 +1,9 @@
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/Entities/Response/ProductoResponse.dart';
 
 class ProductosState {
   final bool isLoding;
-  final List<Productos> productos;
+  final List<ProductosResponse> productos;
 
   ProductosState({
     this.isLoding = false,
@@ -11,7 +12,7 @@ class ProductosState {
 
   ProductosState copyWith({
     bool? isLoding,
-    List<Productos>? productos,
+    List<ProductosResponse>? productos,
   }) =>
       ProductosState(
           isLoding: isLoding ?? this.isLoding,

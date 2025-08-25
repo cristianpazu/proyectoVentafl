@@ -1,6 +1,6 @@
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 
-class Productos {
+class ProductosResponse {
  
  int? idProductos;
  
@@ -16,12 +16,12 @@ class Productos {
 
  String? observacion;
 
- List<Categoria>? categoria;
+ String? categoriasConcat;
 
-Productos({this.idProductos, this.nombre, this.referencia, this.cantidadStock ,this.precioVenta, this.fechaIngreso, this.observacion, this.categoria});
+ProductosResponse({this.idProductos, this.nombre, this.referencia, this.cantidadStock ,this.precioVenta, this.fechaIngreso, this.observacion, this.categoriasConcat});
 
 
-factory Productos.fromJson(Map<String, dynamic> json ) => Productos(
+factory ProductosResponse.fromJson(Map<String, dynamic> json ) => ProductosResponse(
   idProductos: json["idProductos"]?? 0, 
   nombre: json["nombre"]?? "", 
   referencia: json["referencia"]?? "", 
@@ -29,9 +29,7 @@ factory Productos.fromJson(Map<String, dynamic> json ) => Productos(
   precioVenta: json["precioVenta"]?? 0.0 , 
   fechaIngreso: json["fechaIngreso"] ?? "",
   observacion: json["observacion"]?? "",
-  categoria: (json["categoria"] != null && json["categoria"] is List)
-    ? List<Categoria>.from(json["categoria"].map((x) => Categoria.fromJson(x)))
-    : [],
+  categoriasConcat:json["categoriasConcat"]
   );
 
 
@@ -43,10 +41,10 @@ Map<String, dynamic> toJson() => {
   "precioVenta": precioVenta,
   "fechaIngreso": fechaIngreso,
   "observacion": observacion,
-  "categoria": categoria?.map((x) => x.toJson()).toList(),
+  "categoriasConcat": categoriasConcat,
 };
 
-Productos copyWith({
+ProductosResponse copyWith({
 int? idProductos,
    String? nombre,
 
@@ -58,9 +56,9 @@ int? idProductos,
 
  String? observacion,
 
- List<Categoria>? categoria
+ String? categoriasConcat,
 
-})=> Productos(
+})=> ProductosResponse(
 idProductos: idProductos ?? this.idProductos,
 nombre: nombre ?? this.nombre,
 referencia: referencia ?? this.referencia,
@@ -68,7 +66,7 @@ cantidadStock: cantidadStock ?? this.cantidadStock,
 precioVenta: precioVenta ?? this.precioVenta,
 fechaIngreso: fechaIngreso ?? this.fechaIngreso,
 observacion: observacion ?? this.observacion,
-categoria: categoria ?? this.categoria
+categoriasConcat: categoriasConcat ?? this.categoriasConcat
 
 
 
