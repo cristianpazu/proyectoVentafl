@@ -20,7 +20,9 @@ class _ProductosViewState extends ConsumerState {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
     ref.read(productosProvider.notifier).traerProductos();
+  });
   }
 
   @override
@@ -123,8 +125,10 @@ class _ProductosViewState extends ConsumerState {
                           children: [
                             SlidableAction(
                               borderRadius: BorderRadius.circular(20),
-                              onPressed: (context) =>
-                                  context.push('producto/${producto.id}'),
+                              onPressed: (context) {
+                                 print('--------||||||||--------- ${producto.id.toString()}');
+                                  context.push('/producto/${producto.id}');
+                              },
                               backgroundColor:
                                   const Color.fromRGBO(232, 235, 255, 1),
                               foregroundColor:

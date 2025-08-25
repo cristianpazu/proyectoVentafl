@@ -12,6 +12,8 @@ final String productoId;
 
 final productoState = ref.watch(productoProvider(productoId));
 
-    return Container();
+    return Container(
+      child: Text('asddddd'),
+    );
   }
 }

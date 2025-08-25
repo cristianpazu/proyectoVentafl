@@ -13,7 +13,8 @@ final productosProvider =
 class ProductosNotifier extends StateNotifier<ProductosState> {
   final ProductoRepositories productoRepositories;
 
-  ProductosNotifier({required this.productoRepositories})
+  ProductosNotifier({
+    required this.productoRepositories})
       : super(ProductosState()) {
     traerProductos();
   }
@@ -33,8 +34,10 @@ class ProductosNotifier extends StateNotifier<ProductosState> {
       );
       return;
     }
+    
 
     state = state.copyWith(
-        isLoding: false, productos: [...state.productos, ...productos]);
+        isLoding: false, 
+        productos: [...state.productos, ...productos]);
   }
 }

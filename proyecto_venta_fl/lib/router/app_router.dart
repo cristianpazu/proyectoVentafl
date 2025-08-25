@@ -19,7 +19,7 @@ final goRouterProvider = Provider((ref) {
   redirect: (context, state) {
     
 
-    return '/';
+    return null;
   },
   
   
