@@ -53,9 +53,9 @@ class ProductosDatasourceImpl extends ProductoDatasource {
     final respuesta = await HttpService(url).getHttp();
 
        print('>>>>>>>>respuesta<<<<<<<<<<<<<<<<<<< ${respuesta}');
+final productos = Productos.fromJson(respuesta);
 
-
-      final productos = ProductoMapper.jsonToEntity(respuesta);
+      //final productos = ProductoMapper.jsonToEntity(respuesta);
 
 
 

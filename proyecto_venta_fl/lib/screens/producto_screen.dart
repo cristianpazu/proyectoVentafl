@@ -80,7 +80,8 @@ class _ProductInformation extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Generales'),
+           const SizedBox(height: 15 ),
+          const Text('Informacion del producto'),
           const SizedBox(height: 15 ),
           CustomProductField( 
             isTopField: true,
