@@ -61,12 +61,12 @@ class _ProductosViewState extends ConsumerState {
         title: Center(
             child: Text(
           'Inventory',
-          style: 
-          //style: GoogleFonts.blackOpsOne(),
-        TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Roboto-Medium',
-              fontWeight: FontWeight.w600), 
+          style:
+              //style: GoogleFonts.blackOpsOne(),
+              TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: 'Roboto-Medium',
+                  fontWeight: FontWeight.w600),
         )),
       ),
       body: Column(
@@ -174,20 +174,24 @@ class _ProductosViewState extends ConsumerState {
                               },
                               backgroundColor:
                                   const Color.fromRGBO(232, 235, 255, 1),
-                              foregroundColor: const Color.fromRGBO(87, 118, 230, 1),
-                                  //const Color.fromRGBO(96, 124, 218, 1),
+                              foregroundColor:
+                                  const Color.fromRGBO(87, 118, 230, 1),
+                              //const Color.fromRGBO(96, 124, 218, 1),
                               icon: Icons.edit,
                               label: 'Editar',
                             ),
                           ],
                         ),
                         child: ListTile(
-                            title: Text('${producto.nombre}',  style: 
-          //style: GoogleFonts.blackOpsOne(),
-        TextStyle(
-              fontSize: 18.0,
-              fontFamily: 'Roboto-Regular',
-              fontWeight: FontWeight.w500), ),
+                            title: Text(
+                              '${producto.nombre}',
+                              style: 
+                            
+                                  TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: 'Roboto-Regular',
+                                      fontWeight: FontWeight.w400), 
+                            ),
                             subtitle: Text('${producto.precioVenta}'),
                             trailing: IconButton(
                                 onPressed: () {

@@ -13,107 +13,104 @@ import 'package:proyecto_venta_fl/widget/full_screen_loader.dart';
 import '../notifiers/categoria_notifiers/categoria_state_notifier.dart';
 
 class ProductoScreen extends ConsumerWidget {
-final int productoId;
+  final int productoId;
 
   const ProductoScreen({super.key, required this.productoId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final productoState = ref.watch(productoProvider(productoId));
 
-final productoState = ref.watch(productoProvider(productoId));
-
-
-print('prre ${productoState.producto}');
-print('prre ${productoId}');
+    print('prre ${productoState.producto}');
+    print('prre ${productoId}');
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Producto'),
-        actions: [
-        ],
-      ), 
-      body: productoState.isLoading ?  FullScreenLoader() : _ProductView(product: productoState.producto!),
+        actions: [],
+      ),
+      body: productoState.isLoading
+          ? FullScreenLoader()
+          : _ProductView(product: productoState.producto!),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.save_as_outlined), 
-        
-        ),
+        onPressed: () {},
+        child: Icon(Icons.save_as_outlined),
+      ),
     );
   }
 }
 
-
-
 class _ProductView extends StatelessWidget {
-
   final Productos product;
 
   const _ProductView({required this.product});
 
   @override
   Widget build(BuildContext context) {
-
     final textStyles = Theme.of(context).textTheme;
 
     return ListView(
       children: [
-    
-        
-          _ProductInformation( product: product ),
-          
-        ],
+        _ProductInformation(product: product),
+      ],
     );
   }
 }
 
-
 class _ProductInformation extends ConsumerWidget {
-  final Productos  product;
+  final Productos product;
   const _ProductInformation({required this.product});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref ) {
-
-    
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           const SizedBox(height: 15 ),
+          const SizedBox(height: 15),
           const Text('Informacion del producto'),
-          const SizedBox(height: 15 ),
-          CustomProductField( 
+          const SizedBox(height: 15),
+          CustomProductField(
             isTopField: true,
             label: 'Nombre',
             initialValue: product.nombre ?? '',
           ),
-          CustomProductField( 
+          CustomProductField(
             isTopField: true,
             label: 'Referencia',
             initialValue: product.referencia ?? '',
           ),
-          CustomProductField( 
+          CustomProductField(
             isBottomField: true,
             label: 'Precio Venta',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             initialValue: product.precioVenta.toString(),
           ),
 
-          const SizedBox(height: 15 ),
+          const SizedBox(height: 15),
           const Text('Extras'),
 
-          MultiSelectCategorias(productoId: product.idProductos!,),
-          const SizedBox(height: 5 ),
-         // _GenderSelector( selectedGender: product.gender ),
-          
+          MultiSelectCategorias(
+            productoId: product.idProductos!,
+          ),
+          const SizedBox(height: 5),
+          // _GenderSelector( selectedGender: product.gender ),
 
+/*
           const SizedBox(height: 15 ),
           CustomProductField( 
             isTopField: true,
             label: 'Existencias',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             initialValue: product.cantidadStock.toString(),
+          ), */
+          const SizedBox(height: 15),
+          CustomProductField(
+            isTopField: true,
+            maxLines: 10,
+            label: 'Observacion',
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            initialValue: product.observacion.toString(),
           ),
 /*
           CustomProductField( 
@@ -130,14 +127,12 @@ class _ProductInformation extends ConsumerWidget {
             initialValue: product.tags.join(', '),
           ), */
 
-
-          const SizedBox(height: 100 ),
+          const SizedBox(height: 100),
         ],
       ),
     );
   }
 }
-
 
 class MultiSelectCategorias extends ConsumerWidget {
   final int productoId;
@@ -149,25 +144,31 @@ class MultiSelectCategorias extends ConsumerWidget {
     final categoriaState = ref.watch(categoriasProvider);
     final productoState = ref.watch(productoProvider(productoId));
     final producto = productoState.producto;
+    print('producto>>>>>>>>>>>>> ${productoState.producto!.toJson()}');
+    print('producto>>>>>>>>>>>>> 111 ${producto!.categorias}');
 
     if (producto == null) return const SizedBox();
 
     final categorias = categoriaState.categoria;
-
+    print('producto.categoria  ${producto.categorias} ');
     if (categoriaState.isLoding) {
       return const CircularProgressIndicator();
     }
 
+    print('Categorías seleccionadas: ${producto.toJson()} ');
     return MultiSelectDialogField<Categoria>(
       items: categorias
-          .map((categoria) =>
-              MultiSelectItem<Categoria>(categoria, categoria.nombreCategoria ?? ''))
+          .map((categoria) => MultiSelectItem<Categoria>(
+              categoria, categoria.nombreCategoria ?? ''))
           .toList(),
       title: const Text("Seleccionar categorías"),
-      buttonText: const Text("Categorías"),
+      buttonText: Text(
+        producto.categorias?.map((c) => c.nombreCategoria).join(', ') ??
+            'Seleccionar categorías',
+      ),
       searchable: true,
       listType: MultiSelectListType.CHIP,
-      initialValue: producto.categoria ?? [],
+      initialValue: producto.categorias ?? [],
       onConfirm: (List<Categoria> seleccionadas) {
         ref
             .read(productoProvider(productoId).notifier)
@@ -175,7 +176,7 @@ class MultiSelectCategorias extends ConsumerWidget {
       },
       chipDisplay: MultiSelectChipDisplay(
         onTap: (categoria) {
-          final nuevaLista = List<Categoria>.from(producto.categoria ?? [])
+          final nuevaLista = List<Categoria>.from(producto.categorias ?? [])
             ..remove(categoria);
           ref
               .read(productoProvider(productoId).notifier)
@@ -188,8 +189,8 @@ class MultiSelectCategorias extends ConsumerWidget {
 
 class _GenderSelector extends StatelessWidget {
   final String selectedGender;
-  final List<String> genders = const['men','women','kid'];
-  final List<IconData> genderIcons = const[
+  final List<String> genders = const ['men', 'women', 'kid'];
+  final List<IconData> genderIcons = const [
     Icons.man,
     Icons.woman,
     Icons.boy,
@@ -197,22 +198,20 @@ class _GenderSelector extends StatelessWidget {
 
   const _GenderSelector({required this.selectedGender});
 
-
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SegmentedButton(
         multiSelectionEnabled: false,
         showSelectedIcon: false,
-        style: const ButtonStyle(visualDensity: VisualDensity.compact ),
+        style: const ButtonStyle(visualDensity: VisualDensity.compact),
         segments: genders.map((size) {
           return ButtonSegment(
-            icon: Icon( genderIcons[ genders.indexOf(size) ] ),
-            value: size, 
-            label: Text(size, style: const TextStyle(fontSize: 12))
-          );
-        }).toList(), 
-        selected: { selectedGender },
+              icon: Icon(genderIcons[genders.indexOf(size)]),
+              value: size,
+              label: Text(size, style: const TextStyle(fontSize: 12)));
+        }).toList(),
+        selected: {selectedGender},
         onSelectionChanged: (newSelection) {
           print(newSelection);
         },
@@ -221,30 +220,31 @@ class _GenderSelector extends StatelessWidget {
   }
 }
 
-
 class _ImageGallery extends StatelessWidget {
   final List<String> images;
   const _ImageGallery({required this.images});
 
   @override
   Widget build(BuildContext context) {
-
     return PageView(
       scrollDirection: Axis.horizontal,
-      controller: PageController(
-        viewportFraction: 0.7
-      ),
+      controller: PageController(viewportFraction: 0.7),
       children: images.isEmpty
-        ? [ ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            child: Image.asset('assets/images/no-image.jpg', fit: BoxFit.cover )) 
-        ]
-        : images.map((e){
-          return ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            child: Image.network(e, fit: BoxFit.cover,),
-          );
-      }).toList(),
+          ? [
+              ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  child: Image.asset('assets/images/no-image.jpg',
+                      fit: BoxFit.cover))
+            ]
+          : images.map((e) {
+              return ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Image.network(
+                  e,
+                  fit: BoxFit.cover,
+                ),
+              );
+            }).toList(),
     );
   }
 }

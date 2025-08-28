@@ -29,7 +29,7 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
 
       final producto =
           await productoRepositories.getProductosById(state.id ?? 1);
-      print('entre aquiiiiiiiii $producto');
+    //  print('entre aquiiiiiiiii ${producto.categoria}');
       state = state.copyWith(isLoading: false, producto: producto);
     } catch (e, stackTrace) {
     print('Error al cargar producto: $e');
@@ -41,7 +41,7 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
     if (state.producto == null) return;
 
     final updatedProducto =
-        state.producto!.copyWith(categoria: nuevasCategorias);
+        state.producto!.copyWith(categorias: nuevasCategorias);
 
     state = state.copyWith(producto: updatedProducto);
   }

@@ -1,77 +1,73 @@
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 
 class Productos {
- 
- int? idProductos;
- 
- String? nombre;
+  int? idProductos;
 
- String? referencia;
+  String? nombre;
 
- int? cantidadStock;
+  String? referencia;
 
- int? precioVenta;
+  int? cantidadStock;
 
- String? fechaIngreso;
+  int? precioVenta;
 
- String? observacion;
+  String? fechaIngreso;
 
- List<Categoria>? categoria;
+  String? observacion;
 
-Productos({this.idProductos, this.nombre, this.referencia, this.cantidadStock ,this.precioVenta, this.fechaIngreso, this.observacion, this.categoria});
+  List<Categoria>? categorias;
 
+  Productos(
+      {this.idProductos,
+      this.nombre,
+      this.referencia,
+      this.cantidadStock,
+      this.precioVenta,
+      this.fechaIngreso,
+      this.observacion,
+      this.categorias});
 
-factory Productos.fromJson(Map<String, dynamic> json ) => Productos(
-  idProductos: json["idProductos"]?? 0, 
-  nombre: json["nombre"]?? "", 
-  referencia: json["referencia"]?? "", 
-  cantidadStock: json["cantidadStock"] ?? 0,
-  precioVenta: json["precioVenta"]?? 0.0 , 
-  fechaIngreso: json["fechaIngreso"] ?? "",
-  observacion: json["observacion"]?? "",
-  categoria: (json["categoria"] != null && json["categoria"] is List)
-    ? List<Categoria>.from(json["categoria"].map((x) => Categoria.fromJson(x)))
-    : [],
-  );
+  factory Productos.fromJson(Map<String, dynamic> json) => Productos(
+        idProductos: json["idProductos"] ?? 0,
+        nombre: json["nombre"] ?? "",
+        referencia: json["referencia"] ?? "",
+        cantidadStock: json["cantidadStock"] ?? 0,
+        precioVenta: json["precioVenta"] ?? 0.0,
+        fechaIngreso: json["fechaIngreso"] ?? "",
+        observacion: json["observacion"] ?? "",
+        categorias: (json["categorias"] != null && json["categorias"] is List)
+            ? List<Categoria>.from(
+                json["categorias"].map((x) => Categoria.fromJson(x)))
+            : [],
+      );
 
+  Map<String, dynamic> toJson() => {
+        "idProductos": idProductos,
+        "nombre": nombre,
+        "referencia": referencia,
+        "cantidadStock": cantidadStock,
+        "precioVenta": precioVenta,
+        "fechaIngreso": fechaIngreso,
+        "observacion": observacion,
+        "categorias": categorias?.map((x) => x.toJson()).toList(),
+      };
 
-Map<String, dynamic> toJson() => {
-  "idProductos": idProductos,
-  "nombre": nombre,
-  "referencia": referencia,
-  "cantidadStock": cantidadStock,
-  "precioVenta": precioVenta,
-  "fechaIngreso": fechaIngreso,
-  "observacion": observacion,
-  "categoria": categoria?.map((x) => x.toJson()).toList(),
-};
-
-Productos copyWith({
-int? idProductos,
-   String? nombre,
-
- String? referencia,
- int? cantidadStock,
- int? precioVenta,
-
- String? fechaIngreso,
-
- String? observacion,
-
- List<Categoria>? categoria
-
-})=> Productos(
-idProductos: idProductos ?? this.idProductos,
-nombre: nombre ?? this.nombre,
-referencia: referencia ?? this.referencia,
-cantidadStock: cantidadStock ?? this.cantidadStock,
-precioVenta: precioVenta ?? this.precioVenta,
-fechaIngreso: fechaIngreso ?? this.fechaIngreso,
-observacion: observacion ?? this.observacion,
-categoria: categoria ?? this.categoria
-
-
-
-);
-
+  Productos copyWith(
+          {int? idProductos,
+          String? nombre,
+          String? referencia,
+          int? cantidadStock,
+          int? precioVenta,
+          String? fechaIngreso,
+          String? observacion,
+          List<Categoria>? categorias}) =>
+      Productos(
+          idProductos: idProductos ?? this.idProductos,
+          nombre: nombre ?? this.nombre,
+          referencia: referencia ?? this.referencia,
+          cantidadStock: cantidadStock ?? this.cantidadStock,
+          precioVenta: precioVenta ?? this.precioVenta,
+          fechaIngreso: fechaIngreso ?? this.fechaIngreso,
+          observacion: observacion ?? this.observacion,
+          categorias: categorias ?? this.categorias);
 }

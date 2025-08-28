@@ -1,37 +1,37 @@
 class Categoria {
   
-  int? id;
+  int? idCategoria;
   String? nombreCategoria;
 
 
-  Categoria({this.id, this.nombreCategoria});
+  Categoria({this.idCategoria, this.nombreCategoria});
 
 
 
    factory Categoria.fromJson(Map<String, dynamic> json) => Categoria(
-  id: json["id"] ?? 0, 
-  nombreCategoria: json["nombre_categoria"] ?? "", 
+  idCategoria: json["idCategoria"] ?? 0, 
+  nombreCategoria: json["nombreCategoria"] ?? "", 
    );
 
   Map<String, dynamic> toJson() =>{
-    "id":id,
-    "nombre_Categoria": nombreCategoria,
+    "idCategoria":idCategoria,
+    "nombreCategoria": nombreCategoria,
 
   };
 
   Categoria copyWith(
     {
-     int? id, 
+     int? idCategoria, 
     String? nombreCategoria, 
 
     }
   )=> Categoria(
-    id: id ??  this.id, 
+    idCategoria: idCategoria ??  this.idCategoria, 
     nombreCategoria: nombreCategoria ?? this.nombreCategoria,);
 
  @override
   String toString() {
-    return 'Categoria(id: $id, nombreCategoria: $nombreCategoria)';
+    return 'Categoria(idCategoria: $idCategoria, nombreCategoria: $nombreCategoria)';
   }
 
 

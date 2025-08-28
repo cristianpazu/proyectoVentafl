@@ -11,7 +11,7 @@ return Categoria(
   
 
 
-  id: json['id'],
+  idCategoria: json['idCategoria'],
   nombreCategoria: json['nombreCategoria']
 );
 } 
