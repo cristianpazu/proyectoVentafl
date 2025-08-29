@@ -6,7 +6,7 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
-import 'package:proyecto_venta_fl/notifiers/producto_state_notifier.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_id/producto_state_notifier.dart';
 import 'package:proyecto_venta_fl/widget/custom_product_field.dart';
 import 'package:proyecto_venta_fl/widget/full_screen_loader.dart';
 

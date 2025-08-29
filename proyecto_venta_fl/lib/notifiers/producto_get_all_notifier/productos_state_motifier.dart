@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_venta_fl/domain/repositories/producto_repositories.dart';
-import 'package:proyecto_venta_fl/notifiers/productos_state.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state.dart';
 import 'package:proyecto_venta_fl/providers/productos_repository_provider.dart';
 
 final productosProvider =

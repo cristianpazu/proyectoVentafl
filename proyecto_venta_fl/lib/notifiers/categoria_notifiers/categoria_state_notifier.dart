@@ -3,7 +3,7 @@ import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/domain/repositories/categoria_repositories.dart';
 import 'package:proyecto_venta_fl/domain/repositories/producto_repositories.dart';
 import 'package:proyecto_venta_fl/notifiers/categoria_notifiers/categoria_state.dart';
-import 'package:proyecto_venta_fl/notifiers/productos_state.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state.dart';
 import 'package:proyecto_venta_fl/providers/categoria_repository_provider.dart';
 import 'package:proyecto_venta_fl/providers/productos_repository_provider.dart';
 

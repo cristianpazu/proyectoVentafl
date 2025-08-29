@@ -1,0 +1,73 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:formz/formz.dart';
+import 'package:proyecto_venta_fl/Entities/Categoria.dart';
+import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_registre_notifier/producto_actualizar_state.dart';
+
+final productoActualizarProvider = StateNotifierProvider.autoDispose.family<ProductoActualizarNotifier, ProductoActualizarState, Productos>((ref, producto){
+return ProductoActualizarNotifier(product: producto);
+});
+
+
+
+
+class ProductoActualizarNotifier
+    extends StateNotifier<ProductoActualizarState> {
+  final  Future<bool>  Function(Map<String, dynamic> productLike)? onSubmitCallback;
+
+  ProductoActualizarNotifier(
+      {this.onSubmitCallback, required Productos product})
+      : super(ProductoActualizarState(
+          idProductos: product.idProductos,
+          nombre: product.nombre,
+          referencia: product.referencia,
+          precioVenta: product.precioVenta,
+          fechaIngreso: product.fechaIngreso,
+          observacion: product.observacion,
+          categorias: product.categorias,
+        ));
+
+  void onNombreChanged(String nombre) {
+    state = state.copyWith(nombre: nombre);
+  }
+
+  void onReferenciaChanged(String referencia) {
+    state = state.copyWith(referencia: referencia);
+  }
+
+  void onPrecioVentaChanged(int precioVenta) {
+    state = state.copyWith(precioVenta: precioVenta);
+  }
+
+  void onFechaIngresoChanged(String fechaIngreso) {
+    state = state.copyWith(fechaIngreso: fechaIngreso);
+  }
+
+  void onObservacionChanged(String observacion) {
+    state = state.copyWith(observacion: observacion);
+  }
+
+  void onCategoriasChanged(List<Categoria> categorias) {
+    state = state.copyWith(categorias: categorias);
+  }
+
+  Future<bool> onFOrmSubmit() async {
+    if (onSubmitCallback == null) return false;
+
+    final productLike = {
+      'idProductos': (state.idProductos == 'new') ? null : state.idProductos,
+      'nombre': state.nombre,
+      'referencia': state.referencia,
+      'precioVenta': state.precioVenta,
+      'fechaIngreso': state.fechaIngreso,
+      'observacion': state.observacion,
+      'categorias': state.categorias,
+    };
+
+    try {
+      return await onSubmitCallback!(productLike);
+    } catch (e) {
+      return false;
+    }
+  }
+}

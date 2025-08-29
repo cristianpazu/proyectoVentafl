@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/domain/repositories/producto_repositories.dart';
 import 'package:proyecto_venta_fl/infrastructure/repositories/productos_repository_impl.dart';
-import 'package:proyecto_venta_fl/notifiers/producto_state.dart';
-import 'package:proyecto_venta_fl/notifiers/productos_state.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_id/producto_state.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state.dart';
 import 'package:proyecto_venta_fl/providers/productos_repository_provider.dart';
 
 final productoProvider = StateNotifierProvider.autoDispose

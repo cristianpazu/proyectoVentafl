@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 //import 'package:google_fonts/google_fonts.dart';
-import 'package:proyecto_venta_fl/notifiers/productos_state_motifier.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state_motifier.dart';
 import 'package:proyecto_venta_fl/router/app_router.dart';
 import 'package:proyecto_venta_fl/widget/info_screen.dart';
 import 'package:proyecto_venta_fl/widget/product_card.dart';
