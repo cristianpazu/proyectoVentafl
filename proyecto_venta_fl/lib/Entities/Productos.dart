@@ -32,7 +32,7 @@ class Productos {
         nombre: json["nombre"] ?? "",
         referencia: json["referencia"] ?? "",
         cantidadStock: json["cantidadStock"] ?? 0,
-        precioVenta: json["precioVenta"] ?? 0.0,
+        precioVenta: json["precioVenta"] ?? 0,
         fechaIngreso: json["fechaIngreso"] ?? "",
         observacion: json["observacion"] ?? "",
         categorias: (json["categorias"] != null && json["categorias"] is List)

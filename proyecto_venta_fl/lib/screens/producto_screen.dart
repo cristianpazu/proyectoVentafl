@@ -34,7 +34,11 @@ class ProductoScreen extends ConsumerWidget {
           ? FullScreenLoader()
           : _ProductView(product: productoState.producto!),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+
+        ref.read(productoActualizarProvider(productoState.producto!).notifier).onFOrmSubmit();
+
+        },
         child: Icon(Icons.save_as_outlined),
       ),
     );
@@ -72,8 +76,16 @@ class _ProductInformation extends ConsumerWidget {
    
    
    final productoForm = ref.watch(productoActualizarProvider(product));
-   
-   
+   print('productoForm nombre ${productoForm.nombre}');
+   print('productoForm referencia ${productoForm.referencia}');
+   print('productoForm cantidadStock ${productoForm.cantidadStock}');
+   print('productoForm precioVenta ${productoForm.precioVenta}');
+   print('productoForm categoria ${productoForm.categorias}');
+   print('productoForm observacion ${productoForm.observacion}');
+
+  
+
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -98,7 +110,7 @@ class _ProductInformation extends ConsumerWidget {
             isBottomField: true,
             label: 'Precio Venta',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            initialValue: productoForm.precioVenta.toString(),
+            initialValue: '210',
              onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onPrecioVentaChanged,
           ),
 
@@ -124,9 +136,8 @@ class _ProductInformation extends ConsumerWidget {
             isTopField: true,
             maxLines: 10,
             label: 'Observacion',
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             initialValue: productoForm.observacion.toString(),
-               onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onObservacionChanged,
+               onChanged: ref.read(productoActualizarProvider(product).notifier).onObservacionChanged,
           ),
 /*
           CustomProductField( 

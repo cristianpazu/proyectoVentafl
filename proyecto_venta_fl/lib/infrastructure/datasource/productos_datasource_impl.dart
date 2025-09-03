@@ -9,9 +9,21 @@ import 'package:proyecto_venta_fl/utils/http.dart';
 
 class ProductosDatasourceImpl extends ProductoDatasource {
   @override
-  Future<Productos> createUpdateProductos(Map<String, dynamic> productLike) {
-    // TODO: implement createUpdateProductos
-    throw UnimplementedError();
+  Future<Productos> createUpdateProductos(
+      Map<String, dynamic> productLike) async {
+    try {
+      final int? productoId = productLike['idProducto'];
+      final String methos = (productoId == null) ? 'POST' : 'PUT';
+      final String url =
+          (productoId == null) ? 'post' : Baseurl.actualizarProducto;
+      productLike.remove('idProducto');
+      final actualizarProducto =
+          await HttpService(url).postHttp(productLike, methos);
+
+      return actualizarProducto;
+    } catch (e) {
+      throw Exception();
+    }
   }
 
   @override
@@ -48,23 +60,19 @@ class ProductosDatasourceImpl extends ProductoDatasource {
   @override
   Future<Productos> getProductosById(int id) async {
     try {
-   final url = Baseurl.consultarProductoId.replaceFirst('{id}', id.toString());
-    
-    final respuesta = await HttpService(url).getHttp();
-       print('>>>>>>>>respuesta<<<<<<<<<<<<<<<<<<< ${respuesta}');
+      final url =
+          Baseurl.consultarProductoId.replaceFirst('{id}', id.toString());
 
-final productos = Productos.fromJson(respuesta);
-       print('>>>>>>>>productos<<<<<<<<<<<<<<<<<<< ${productos.toJson()}');
+      final respuesta = await HttpService(url).getHttp();
+      print('>>>>>>>>respuesta<<<<<<<<<<<<<<<<<<< ${respuesta}');
+
+      final productos = Productos.fromJson(respuesta);
+      print('>>>>>>>>productos<<<<<<<<<<<<<<<<<<< ${productos.toJson()}');
 
       //final productos = ProductoMapper.jsonToEntity(respuesta);
 
-
-
       return productos;
     } on DioException catch (e) {
-
-
-
       if (e.response!.statusCode == 404 || e.response!.statusCode == 500)
         throw ProductosNotFound();
 

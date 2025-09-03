@@ -3,9 +3,18 @@ import 'package:formz/formz.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
 import 'package:proyecto_venta_fl/notifiers/producto_registre_notifier/producto_actualizar_state.dart';
+import 'package:proyecto_venta_fl/providers/productos_repository_provider.dart';
 
-final productoActualizarProvider = StateNotifierProvider.autoDispose.family<ProductoActualizarNotifier, ProductoActualizarState, Productos>((ref, producto){
-return ProductoActualizarNotifier(product: producto);
+final productoActualizarProvider = StateNotifierProvider.autoDispose.family<ProductoActualizarNotifier, ProductoActualizarState, Productos>
+(
+  (ref, producto){
+
+ final createUpdateCallback = ref.watch(productosRepositoryProvider).createUpdateProductos;
+
+return ProductoActualizarNotifier(
+product: producto,
+onSubmitCallback: createUpdateCallback
+);
 });
 
 
@@ -13,7 +22,7 @@ return ProductoActualizarNotifier(product: producto);
 
 class ProductoActualizarNotifier
     extends StateNotifier<ProductoActualizarState> {
-  final  Future<bool>  Function(Map<String, dynamic> productLike)? onSubmitCallback;
+  final  Future<Productos>  Function(Map<String, dynamic> productLike)? onSubmitCallback;
 
   ProductoActualizarNotifier(
       {this.onSubmitCallback, required Productos product})
@@ -21,11 +30,17 @@ class ProductoActualizarNotifier
           idProductos: product.idProductos,
           nombre: product.nombre,
           referencia: product.referencia,
+          cantidadStock: product.cantidadStock,
           precioVenta: product.precioVenta,
           fechaIngreso: product.fechaIngreso,
           observacion: product.observacion,
           categorias: product.categorias,
-        ));
+        )
+        
+        );
+        
+
+
 
   void onNombreChanged(String nombre) {
     state = state.copyWith(nombre: nombre);
@@ -33,6 +48,10 @@ class ProductoActualizarNotifier
 
   void onReferenciaChanged(String referencia) {
     state = state.copyWith(referencia: referencia);
+  }
+
+    void onCantidadStockChanged(int cantidadStock) {
+    state = state.copyWith(cantidadStock: cantidadStock);
   }
 
   void onPrecioVentaChanged(int precioVenta) {
@@ -58,14 +77,19 @@ class ProductoActualizarNotifier
       'idProductos': (state.idProductos == 'new') ? null : state.idProductos,
       'nombre': state.nombre,
       'referencia': state.referencia,
+      'cantidadStock': state.cantidadStock,
       'precioVenta': state.precioVenta,
       'fechaIngreso': state.fechaIngreso,
       'observacion': state.observacion,
       'categorias': state.categorias,
     };
 
+    print('productoForm precioVenta<<< ${productLike} ');
+
     try {
-      return await onSubmitCallback!(productLike);
+       await onSubmitCallback!(productLike);
+
+       return true;
     } catch (e) {
       return false;
     }
