@@ -6,7 +6,9 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state_motifier.dart';
 import 'package:proyecto_venta_fl/notifiers/producto_get_id/producto_state_notifier.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_registre_notifier/producto_actualizar_state_notifier.dart';
 import 'package:proyecto_venta_fl/widget/custom_product_field.dart';
 import 'package:proyecto_venta_fl/widget/full_screen_loader.dart';
 
@@ -39,13 +41,18 @@ class ProductoScreen extends ConsumerWidget {
   }
 }
 
-class _ProductView extends StatelessWidget {
+class _ProductView extends ConsumerWidget {
   final Productos product;
 
   const _ProductView({required this.product});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+
+   final productoForm = ref.watch(productoActualizarProvider(product));
+
+
     final textStyles = Theme.of(context).textTheme;
 
     return ListView(
@@ -62,6 +69,11 @@ class _ProductInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+   
+   
+   final productoForm = ref.watch(productoActualizarProvider(product));
+   
+   
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -73,25 +85,28 @@ class _ProductInformation extends ConsumerWidget {
           CustomProductField(
             isTopField: true,
             label: 'Nombre',
-            initialValue: product.nombre ?? '',
+            initialValue: productoForm.nombre ?? '',
+            onChanged: ref.read(productoActualizarProvider(product).notifier).onNombreChanged,
           ),
           CustomProductField(
             isTopField: true,
             label: 'Referencia',
-            initialValue: product.referencia ?? '',
+            initialValue: productoForm.referencia ?? '',
+           onChanged: ref.read(productoActualizarProvider(product).notifier).onReferenciaChanged,
           ),
           CustomProductField(
             isBottomField: true,
             label: 'Precio Venta',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            initialValue: product.precioVenta.toString(),
+            initialValue: productoForm.precioVenta.toString(),
+             onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onPrecioVentaChanged,
           ),
 
           const SizedBox(height: 15),
           const Text('Extras'),
 
           MultiSelectCategorias(
-            productoId: product.idProductos!,
+            productoId: productoForm.idProductos!,
           ),
           const SizedBox(height: 5),
           // _GenderSelector( selectedGender: product.gender ),
@@ -110,7 +125,8 @@ class _ProductInformation extends ConsumerWidget {
             maxLines: 10,
             label: 'Observacion',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            initialValue: product.observacion.toString(),
+            initialValue: productoForm.observacion.toString(),
+               onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onObservacionChanged,
           ),
 /*
           CustomProductField( 
@@ -136,6 +152,9 @@ class _ProductInformation extends ConsumerWidget {
 
 class MultiSelectCategorias extends ConsumerWidget {
   final int productoId;
+
+
+ 
 
   const MultiSelectCategorias({required this.productoId});
 
