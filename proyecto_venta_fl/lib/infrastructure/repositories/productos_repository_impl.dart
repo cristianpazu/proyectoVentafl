@@ -16,9 +16,8 @@ ProductosRepositoryImpl(this.productoDatasource);
 
 
   @override
-  Future<Productos> createUpdateProductos(Map<String, dynamic> productLike) {
-    // TODO: implement createUpdateProductos
-    throw UnimplementedError();
+  Future<ProductosResponse> createUpdateProductos(Map<String, dynamic> productLike) {
+   return productoDatasource.createUpdateProductos(productLike);
   }
 
   @override

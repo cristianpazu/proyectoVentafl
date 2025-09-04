@@ -2,31 +2,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state_motifier.dart';
 import 'package:proyecto_venta_fl/notifiers/producto_registre_notifier/producto_actualizar_state.dart';
 import 'package:proyecto_venta_fl/providers/productos_repository_provider.dart';
 
-final productoActualizarProvider = StateNotifierProvider.autoDispose.family<ProductoActualizarNotifier, ProductoActualizarState, Productos>
-(
-  (ref, producto){
+final productoActualizarProvider = StateNotifierProvider.autoDispose
+    .family<ProductoActualizarNotifier, ProductoActualizarState, Productos>(
+        (ref, producto) {
+//  final createUpdateCallback =  ref.watch(productosRepositoryProvider).createUpdateProductos;
 
- final createUpdateCallback = ref.watch(productosRepositoryProvider).createUpdateProductos;
+final createUpdateCallback = ref.watch(productosProvider.notifier).crearOrUpdateProductos;
 
-return ProductoActualizarNotifier(
-product: producto,
-onSubmitCallback: createUpdateCallback
-);
+print('createUpdateCallback $createUpdateCallback');
+  return ProductoActualizarNotifier(
+      product: producto, onSubmitCallback: createUpdateCallback);
 });
-
-
-
 
 class ProductoActualizarNotifier
     extends StateNotifier<ProductoActualizarState> {
-  final  Future<Productos>  Function(Map<String, dynamic> productLike)? onSubmitCallback;
+  final Future<bool> Function(Map<String, dynamic> productLike)? onSubmitCallback;
 
-  ProductoActualizarNotifier(
-      {this.onSubmitCallback, required Productos product})
-      : super(ProductoActualizarState(
+  ProductoActualizarNotifier({
+    this.onSubmitCallback, 
+    required Productos product
+    }): super(
+          ProductoActualizarState(
           idProductos: product.idProductos,
           nombre: product.nombre,
           referencia: product.referencia,
@@ -35,12 +35,7 @@ class ProductoActualizarNotifier
           fechaIngreso: product.fechaIngreso,
           observacion: product.observacion,
           categorias: product.categorias,
-        )
-        
-        );
-        
-
-
+        ));
 
   void onNombreChanged(String nombre) {
     state = state.copyWith(nombre: nombre);
@@ -50,7 +45,7 @@ class ProductoActualizarNotifier
     state = state.copyWith(referencia: referencia);
   }
 
-    void onCantidadStockChanged(int cantidadStock) {
+  void onCantidadStockChanged(int cantidadStock) {
     state = state.copyWith(cantidadStock: cantidadStock);
   }
 
@@ -71,6 +66,8 @@ class ProductoActualizarNotifier
   }
 
   Future<bool> onFOrmSubmit() async {
+
+
     if (onSubmitCallback == null) return false;
 
     final productLike = {
@@ -87,9 +84,9 @@ class ProductoActualizarNotifier
     print('productoForm precioVenta<<< ${productLike} ');
 
     try {
-       await onSubmitCallback!(productLike);
+     return await onSubmitCallback!(productLike);
 
-       return true;
+     
     } catch (e) {
       return false;
     }

@@ -110,8 +110,10 @@ class _ProductInformation extends ConsumerWidget {
             isBottomField: true,
             label: 'Precio Venta',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            initialValue: '210',
-             onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onPrecioVentaChanged,
+            initialValue: productoForm.precioVenta.toString(),
+             onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onPrecioVentaChanged(
+              int.tryParse(value) ?? 0
+             ),
           ),
 
           const SizedBox(height: 15),

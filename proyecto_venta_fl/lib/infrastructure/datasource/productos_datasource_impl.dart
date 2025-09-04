@@ -9,13 +9,26 @@ import 'package:proyecto_venta_fl/utils/http.dart';
 
 class ProductosDatasourceImpl extends ProductoDatasource {
   @override
-  Future<Productos> createUpdateProductos(
+  Future<ProductosResponse> createUpdateProductos(
+
+    
       Map<String, dynamic> productLike) async {
+
+      print('entre aquiiiiiiiiiiiiii');
+
     try {
-      final int? productoId = productLike['idProducto'];
+
+      print('entre aquiiiiiiiiiiiiii');
+      final int? productoId = productLike['idProductos'];
       final String methos = (productoId == null) ? 'POST' : 'PUT';
       final String url =
           (productoId == null) ? 'post' : Baseurl.actualizarProducto;
+ print('entre aquiiiiiiiiiiiiii productoId $productoId');
+
+ print('entre aquiiiiiiiiiiiiii methos $methos');
+      print('entre aquiiiiiiiiiiiiii url$url');
+
+
       productLike.remove('idProducto');
       final actualizarProducto =
           await HttpService(url).postHttp(productLike, methos);
