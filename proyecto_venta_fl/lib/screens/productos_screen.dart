@@ -222,7 +222,8 @@ class _ProductosViewState extends ConsumerState {
         label: Text('Nuevo Producto'),
         icon: Icon(Icons.add),
         onPressed: () {
-          context.push('/producto/new');
+
+          context.push('/producto/999999');
         },
       ),
     );

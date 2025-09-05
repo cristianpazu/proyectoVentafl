@@ -25,15 +25,16 @@ class ProductosNotifier extends StateNotifier<ProductosState> {
   Future<bool> crearOrUpdateProductos(Map<String, dynamic> productoLike) async {
     try {
     
-      final product =
-          await productoRepositories.createUpdateProductos(productoLike);
+   print('object||||||||||||| ${productoLike}' );
 
+      final product = await productoRepositories.createUpdateProductos(productoLike);
+
+   print('object||||||||||||| ${product.idProductos}' );
     
 
       //  final productos1 = ProductoMapper.jsonToEntity(product as Map<String, dynamic>);
 
-      final isProductoInList =
-          state.productos.any((element) => element.idProductos == 3);
+      final isProductoInList = state.productos.any((element) => element.idProductos == product.idProductos);
      
 
       if (!isProductoInList) {
@@ -50,7 +51,7 @@ class ProductosNotifier extends StateNotifier<ProductosState> {
             .toList(),
       );
 
-      print('isProductoInList productos $state');
+    
       return true;
     } catch (e, stackTrace) {
       print('Error en crearOrUpdateProductos: $e');

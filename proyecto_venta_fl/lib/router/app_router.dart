@@ -14,7 +14,9 @@ final goRouterProvider = Provider((ref) {
   path: '/producto/:id',
   builder: (context, state) {
     final idParam = state.params['id'];
-    final productoId = int.tryParse(idParam ?? 100000.toString()) ?? -1; // o lanza error si es obligatorio
+    final productoId = int.tryParse(idParam!)  ?? 999999; // o lanza error si es obligatorio
+   print('object||||||||>>>>>>>>>>>>> $idParam');
+   print('object||||||||>>>>>>>>>>>>> productoId $productoId');
 
     return ProductoScreen(productoId: productoId);
   },

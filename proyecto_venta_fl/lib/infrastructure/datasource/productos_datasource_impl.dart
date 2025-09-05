@@ -11,30 +11,37 @@ class ProductosDatasourceImpl extends ProductoDatasource {
   @override
   Future<ProductosResponse> createUpdateProductos(
       Map<String, dynamic> productLike) async {
-    print('entre aquiiiiiiiiiiiiii');
+    print('entre aquiiiiiiiiiiiiii $productLike');
 
     try {
-      print('entre aquiiiiiiiiiiiiii');
       final int? productoId = productLike['idProductos'];
       final String methos = (productoId == null) ? 'POST' : 'PUT';
       final String url =
           (productoId == null) ? Baseurl.registrarProducto : Baseurl.actualizarProducto;
     
-  print('productLike $url');
-  
+  print('productLike $productoId');
+
       productLike.remove('idProducto');
-      final actualizarProducto = await HttpService(url).postHttp(productLike, methos);
+     Map<String, dynamic> responseJson;
 
-      print('productLike $productLike');
+if ( methos ==  'POST') {
+    responseJson = await HttpService(url).postRegisterHttp(productLike, methos);
+    print('responseJson $responseJson');
+    print('responseJson productLike$productLike');
+
+}else{
+  responseJson = await HttpService(url).putHttp(productLike, methos);
+}
+
+
+      final producto = ProductosResponse.fromJson(responseJson);
 
 
 
 
 
 
-
-
-      final producto = ProductosResponse.fromJson(actualizarProducto);
+       print('productoproducto $producto');
       return producto;
     } catch (e, stackTrace) {
       print('Error en createUpdateProductos: $e');

@@ -11,22 +11,21 @@ final productoActualizarProvider = StateNotifierProvider.autoDispose
         (ref, producto) {
 //  final createUpdateCallback =  ref.watch(productosRepositoryProvider).createUpdateProductos;
 
-final createUpdateCallback = ref.watch(productosProvider.notifier).crearOrUpdateProductos;
+  final createUpdateCallback =
+      ref.watch(productosProvider.notifier).crearOrUpdateProductos;
 
-print('createUpdateCallback $createUpdateCallback');
   return ProductoActualizarNotifier(
       product: producto, onSubmitCallback: createUpdateCallback);
 });
 
 class ProductoActualizarNotifier
     extends StateNotifier<ProductoActualizarState> {
-  final Future<bool> Function(Map<String, dynamic> productLike)? onSubmitCallback;
+  final Future<bool> Function(Map<String, dynamic> productLike)?
+      onSubmitCallback;
 
-  ProductoActualizarNotifier({
-    this.onSubmitCallback, 
-    required Productos product
-    }): super(
-          ProductoActualizarState(
+  ProductoActualizarNotifier(
+      {this.onSubmitCallback, required Productos product})
+      : super(ProductoActualizarState(
           idProductos: product.idProductos,
           nombre: product.nombre,
           referencia: product.referencia,
@@ -66,12 +65,13 @@ class ProductoActualizarNotifier
   }
 
   Future<bool> onFOrmSubmit() async {
-
-
     if (onSubmitCallback == null) return false;
 
+print('state.idProductos ${state.idProductos}');
+
+
     final productLike = {
-      'idProductos': (state.idProductos == -1 ) ? null : state.idProductos,
+      'idProductos': (state.idProductos == 999999) ? null : state.idProductos,
       'nombre': state.nombre,
       'referencia': state.referencia,
       'cantidadStock': state.cantidadStock,
@@ -84,9 +84,7 @@ class ProductoActualizarNotifier
     print('productoForm precioVenta<<< ${productLike} ');
 
     try {
-     return await onSubmitCallback!(productLike);
-
-     
+      return await onSubmitCallback!(productLike);
     } catch (e) {
       return false;
     }

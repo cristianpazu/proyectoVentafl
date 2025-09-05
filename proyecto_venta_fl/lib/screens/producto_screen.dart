@@ -32,8 +32,6 @@ class ProductoScreen extends ConsumerWidget {
    }
 
 
-    print('prre ${productoState.producto}');
-    print('prre ${productoId}');
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Producto'),
@@ -89,12 +87,7 @@ class _ProductInformation extends ConsumerWidget {
    
    
    final productoForm = ref.watch(productoActualizarProvider(product));
-   print('productoForm nombre ${productoForm.nombre}');
-   print('productoForm referencia ${productoForm.referencia}');
-   print('productoForm cantidadStock ${productoForm.cantidadStock}');
-   print('productoForm precioVenta ${productoForm.precioVenta}');
-   print('productoForm categoria ${productoForm.categorias}');
-   print('productoForm observacion ${productoForm.observacion}');
+   
 
   
 
@@ -189,18 +182,17 @@ class MultiSelectCategorias extends ConsumerWidget {
     final categoriaState = ref.watch(categoriasProvider);
     final productoState = ref.watch(productoProvider(productoId));
     final producto = productoState.producto;
-    print('producto>>>>>>>>>>>>> ${productoState.producto!.toJson()}');
-    print('producto>>>>>>>>>>>>> 111 ${producto!.categorias}');
+    
 
     if (producto == null) return const SizedBox();
 
     final categorias = categoriaState.categoria;
-    print('producto.categoria  ${producto.categorias} ');
+  
     if (categoriaState.isLoding) {
       return const CircularProgressIndicator();
     }
 
-    print('Categorías seleccionadas: ${producto.toJson()} ');
+   
     return MultiSelectDialogField<Categoria>(
       items: categorias
           .map((categoria) => MultiSelectItem<Categoria>(

@@ -19,7 +19,7 @@ class HttpService {
   }
 
 
-    Future postHttp(Map<String, dynamic>producto, String method ) async {
+    Future putHttp(Map<String, dynamic>producto, String method ) async {
     try {
 
 
@@ -53,9 +53,9 @@ class HttpService {
         )
         );
 
+print('response.data ${response.data}');
 
-
-      return response.data;
+      return response.data as Map<String, dynamic>;
     } catch (e) {
       print('Error: $e');
       return {}; // O puedes lanzar una excepción si prefieres

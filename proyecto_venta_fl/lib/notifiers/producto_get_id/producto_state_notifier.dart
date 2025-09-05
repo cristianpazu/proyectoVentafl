@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
 import 'package:proyecto_venta_fl/domain/repositories/producto_repositories.dart';
@@ -12,7 +13,8 @@ final productoProvider = StateNotifierProvider.autoDispose
   final productoRepository = ref.watch(productosRepositoryProvider);
 
   return ProductoNotifier(
-      productoRepositories: productoRepository, productoId: productoId);
+      productoRepositories: productoRepository, 
+      productoId: productoId);
 });
 
 class ProductoNotifier extends StateNotifier<ProductoState> {
@@ -20,20 +22,22 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
 
   ProductoNotifier(
       {required this.productoRepositories, required int productoId})
-      : super(ProductoState(id: productoId)) {
+      : super(ProductoState(idProductos: productoId)) {
     loadProducto();
   }
 
-    Productos newEmptyProducto(){
-final as = Productos(
-      idProductos: -1,
-     nombre: '',
-     referencia: '',
-     precioVenta: 0,
-     fechaIngreso: '',
-     observacion: '',
-    categorias: []
-    );
+  String fechaFormateada = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+  Productos newEmptyProducto() {
+    final as = Productos(
+        idProductos: 999999,
+        nombre:  state.producto?.nombre ?? '',
+        referencia: '',
+        cantidadStock: 0,
+        precioVenta: 0,
+        fechaIngreso: fechaFormateada,
+        observacion: '',
+        categorias: []);
 
     print('>>>>>>>>>>><<<<<<<<<<<<< ${as.toJson()}');
     return as;
@@ -41,34 +45,28 @@ final as = Productos(
 
   Future<void> loadProducto() async {
     try {
+      if (state.idProductos == 999999) {
+        print('entre aquiiii ${state.idProductos}');
 
-    if (state.id == -1 ) {
-      
-      state = state.copyWith(
-        isLoading: false,
-        producto: newEmptyProducto(),
-      );
+        print('entre aquiiii ${newEmptyProducto()}');
+        state = state.copyWith(
+          isLoading: false,
+          producto: newEmptyProducto(
 
-      return;
-    }
+          ),
+        );
 
-
-
-
-
-
-
-
-      print('entre aquiiiiiiiii111 ${state.id}');
+        return;
+      }
 
       final producto =
-          await productoRepositories.getProductosById(state.id ?? 1);
-    //  print('entre aquiiiiiiiii ${producto.categoria}');
+          await productoRepositories.getProductosById(state.idProductos!);
+
       state = state.copyWith(isLoading: false, producto: producto);
     } catch (e, stackTrace) {
-    print('Error al cargar producto: $e');
-    print('Stack trace: $stackTrace');
-  }
+      print('Error al cargar producto: $e');
+      print('Stack trace: $stackTrace');
+    }
   }
 
   void updateCategorias(List<Categoria> nuevasCategorias) {
