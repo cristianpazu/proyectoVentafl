@@ -31,7 +31,7 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
   Productos newEmptyProducto() {
     final as = Productos(
         idProductos: 999999,
-        nombre:  state.producto?.nombre ?? '',
+        nombre:  '',
         referencia: '',
         cantidadStock: 0,
         precioVenta: 0,
@@ -46,16 +46,12 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
   Future<void> loadProducto() async {
     try {
       if (state.idProductos == 999999) {
-        print('entre aquiiii ${state.idProductos}');
-
-        print('entre aquiiii ${newEmptyProducto()}');
+     
         state = state.copyWith(
           isLoading: false,
-          producto: newEmptyProducto(
-
-          ),
+          producto: newEmptyProducto(),
         );
-
+  print('objectobject ${state.producto?.toJson()}');
         return;
       }
 
