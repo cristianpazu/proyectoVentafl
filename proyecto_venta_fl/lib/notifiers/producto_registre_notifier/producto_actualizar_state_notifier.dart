@@ -71,7 +71,7 @@ class ProductoActualizarNotifier
     if (onSubmitCallback == null) return false;
 
     final productLike = {
-      'idProductos': (state.idProductos == 'new') ? null : state.idProductos,
+      'idProductos': (state.idProductos == -1 ) ? null : state.idProductos,
       'nombre': state.nombre,
       'referencia': state.referencia,
       'cantidadStock': state.cantidadStock,

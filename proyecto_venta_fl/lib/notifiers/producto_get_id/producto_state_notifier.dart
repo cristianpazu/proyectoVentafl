@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
+import 'package:proyecto_venta_fl/Entities/Productos.dart';
 import 'package:proyecto_venta_fl/domain/repositories/producto_repositories.dart';
 import 'package:proyecto_venta_fl/infrastructure/repositories/productos_repository_impl.dart';
 import 'package:proyecto_venta_fl/notifiers/producto_get_id/producto_state.dart';
@@ -23,8 +24,41 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
     loadProducto();
   }
 
+    Productos newEmptyProducto(){
+final as = Productos(
+      idProductos: -1,
+     nombre: '',
+     referencia: '',
+     precioVenta: 0,
+     fechaIngreso: '',
+     observacion: '',
+    categorias: []
+    );
+
+    print('>>>>>>>>>>><<<<<<<<<<<<< ${as.toJson()}');
+    return as;
+  }
+
   Future<void> loadProducto() async {
     try {
+
+    if (state.id == -1 ) {
+      
+      state = state.copyWith(
+        isLoading: false,
+        producto: newEmptyProducto(),
+      );
+
+      return;
+    }
+
+
+
+
+
+
+
+
       print('entre aquiiiiiiiii111 ${state.id}');
 
       final producto =

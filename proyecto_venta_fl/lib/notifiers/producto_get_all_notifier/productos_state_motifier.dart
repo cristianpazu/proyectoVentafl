@@ -20,62 +20,69 @@ class ProductosNotifier extends StateNotifier<ProductosState> {
     traerProductos();
   }
 
+  
+
   Future<bool> crearOrUpdateProductos(Map<String, dynamic> productoLike) async {
     try {
-      print('isProductoInList $productoLike');
-      final product = await productoRepositories.createUpdateProductos(productoLike);
+    
+      final product =
+          await productoRepositories.createUpdateProductos(productoLike);
 
-print('isProductoInList >>>>>>>> ${state.productos}');
+    
 
-    //  final productos1 = ProductoMapper.jsonToEntity(product as Map<String, dynamic>);
+      //  final productos1 = ProductoMapper.jsonToEntity(product as Map<String, dynamic>);
 
-      final isProductoInList = state.productos.any((element) => element.idProductos == 3);
-  print('isProductoInList isProductoInList ${state.productos}');
-
-          print('isProductoInList isProductoInList $isProductoInList');
-
-
-
-
-
+      final isProductoInList =
+          state.productos.any((element) => element.idProductos == 3);
+     
 
       if (!isProductoInList) {
         state = state.copyWith(productos: [...state.productos, product]);
-print('isProductoInList $isProductoInList');
+      
         return true;
       }
 
       state = state.copyWith(
         productos: state.productos
-            .map((element) => (element.idProductos == product.idProductos) ? product : element)
-            .toList()
-            ,
+            .map((element) => (element.idProductos == product.idProductos)
+                ? product
+                : element)
+            .toList(),
       );
 
       print('isProductoInList productos $state');
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('Error en crearOrUpdateProductos: $e');
+      print('StackTrace: $stackTrace');
       return false;
     }
   }
 
   Future traerProductos() async {
-    if (state.isLoding) return;
+    try {
 
-    state = state.copyWith(
-      isLoding: true,
-    );
 
-    final productos = await productoRepositories.getAllProductos();
 
-    if (productos.isEmpty) {
+
+
+      if (state.isLoding) return;
+
       state = state.copyWith(
-        isLoding: false,
+        isLoding: true,
       );
-      return;
-    }
 
-    state = state.copyWith(
-        isLoding: false, productos: [...state.productos, ...productos]);
+      final productos = await productoRepositories.getAllProductos();
+
+      if (productos.isEmpty) {
+        state = state.copyWith(
+          isLoding: false,
+        );
+        return;
+      }
+
+      state = state.copyWith(
+          isLoding: false, productos: [...state.productos, ...productos]);
+    } catch (e) {}
   }
 }

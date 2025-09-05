@@ -10,32 +10,36 @@ import 'package:proyecto_venta_fl/utils/http.dart';
 class ProductosDatasourceImpl extends ProductoDatasource {
   @override
   Future<ProductosResponse> createUpdateProductos(
-
-    
       Map<String, dynamic> productLike) async {
-
-      print('entre aquiiiiiiiiiiiiii');
+    print('entre aquiiiiiiiiiiiiii');
 
     try {
-
       print('entre aquiiiiiiiiiiiiii');
       final int? productoId = productLike['idProductos'];
       final String methos = (productoId == null) ? 'POST' : 'PUT';
       final String url =
-          (productoId == null) ? 'post' : Baseurl.actualizarProducto;
- print('entre aquiiiiiiiiiiiiii productoId $productoId');
-
- print('entre aquiiiiiiiiiiiiii methos $methos');
-      print('entre aquiiiiiiiiiiiiii url$url');
-
-
+          (productoId == null) ? Baseurl.registrarProducto : Baseurl.actualizarProducto;
+    
+  print('productLike $url');
+  
       productLike.remove('idProducto');
-      final actualizarProducto =
-          await HttpService(url).postHttp(productLike, methos);
+      final actualizarProducto = await HttpService(url).postHttp(productLike, methos);
 
-      return actualizarProducto;
-    } catch (e) {
-      throw Exception();
+      print('productLike $productLike');
+
+
+
+
+
+
+
+
+      final producto = ProductosResponse.fromJson(actualizarProducto);
+      return producto;
+    } catch (e, stackTrace) {
+      print('Error en createUpdateProductos: $e');
+      print('StackTrace: $stackTrace');
+      rethrow; // Esto lanza el mismo error sin ocultarlo
     }
   }
 

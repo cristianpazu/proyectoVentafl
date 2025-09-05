@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_venta_fl/screens/mainPage.dart';
 import 'package:proyecto_venta_fl/screens/producto_screen.dart';
 import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 
@@ -7,13 +8,13 @@ final goRouterProvider = Provider((ref) {
   return GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => ProductosView(),
+      builder: (context, state) => Mainpage(),
     ),
     GoRoute(
   path: '/producto/:id',
   builder: (context, state) {
     final idParam = state.params['id'];
-    final productoId = int.tryParse(idParam ?? '') ?? -1; // o lanza error si es obligatorio
+    final productoId = int.tryParse(idParam ?? 100000.toString()) ?? -1; // o lanza error si es obligatorio
 
     return ProductoScreen(productoId: productoId);
   },

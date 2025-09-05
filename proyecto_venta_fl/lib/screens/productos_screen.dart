@@ -21,9 +21,16 @@ class _ProductosViewState extends ConsumerState {
   @override
   void initState() {
     super.initState();
-    /* WidgetsBinding.instance.addPostFrameCallback((_) {
-    ref.read(productosProvider.notifier).traerProductos();
-  }); */
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final productosNotifier = ref.read(productosProvider.notifier);
+      final productos = ref.read(productosProvider).productos;
+
+      // Solo traer si la lista está vacía
+      if (productos.isEmpty) {
+        productosNotifier.traerProductos();
+      }
+      // ref.read(productosProvider.notifier).traerProductos();
+    });
   }
 
   @override
@@ -185,12 +192,10 @@ class _ProductosViewState extends ConsumerState {
                         child: ListTile(
                             title: Text(
                               '${producto.nombre}',
-                              style: 
-                            
-                                  TextStyle(
-                                      fontSize: 16.0,
-                                      fontFamily: 'Roboto-Regular',
-                                      fontWeight: FontWeight.w400), 
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontFamily: 'Roboto-Regular',
+                                  fontWeight: FontWeight.w400),
                             ),
                             subtitle: Text('${producto.precioVenta}'),
                             trailing: IconButton(
@@ -212,6 +217,13 @@ class _ProductosViewState extends ConsumerState {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Nuevo Producto'),
+        icon: Icon(Icons.add),
+        onPressed: () {
+          context.push('/producto/new');
+        },
       ),
     );
   }
