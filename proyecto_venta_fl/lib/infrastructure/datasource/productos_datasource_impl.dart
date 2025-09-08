@@ -21,7 +21,7 @@ class ProductosDatasourceImpl extends ProductoDatasource {
     
   print('productLike $productoId');
 
-      productLike.remove('idProducto');
+      productLike.remove('idProductos');
      Map<String, dynamic> responseJson;
 
 if ( methos ==  'POST') {
