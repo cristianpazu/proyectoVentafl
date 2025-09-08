@@ -55,7 +55,7 @@ class HttpService {
 
 print('response.data ${response.data}');
 
-      return response.data as Map<String, dynamic>;
+      return response.data;
     } catch (e) {
       print('Error: $e');
       return {}; // O puedes lanzar una excepción si prefieres

@@ -69,6 +69,7 @@ class ProductoActualizarNotifier
 
 print('state.idProductos ${state.idProductos}');
 
+    print('productoForm nombre ${state.nombre} ');
 
     final productLike = {
       'idProductos': (state.idProductos == 999999) ? null : state.idProductos,
@@ -78,14 +79,17 @@ print('state.idProductos ${state.idProductos}');
       'precioVenta': state.precioVenta,
       'fechaIngreso': state.fechaIngreso,
       'observacion': state.observacion,
-      'categorias': state.categorias,
+      'categorias':  state.categorias!.map((cat) => {'idCategoria': cat.idCategoria}).toList(),
     };
-
-    print('productoForm precioVenta<<< ${productLike} ');
+    print('productoForm idProductos ${state.idProductos} ');
+    print('productoForm productLike ${productLike} ');
 
     try {
       return await onSubmitCallback!(productLike);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('productoForm productLike $stackTrace');
+
+      print('productoForm productLike $e');
       return false;
     }
   }
