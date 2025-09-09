@@ -79,7 +79,7 @@ print('state.idProductos ${state.idProductos}');
       'precioVenta': state.precioVenta,
       'fechaIngreso': state.fechaIngreso,
       'observacion': state.observacion,
-      'categorias':  state.categorias!.map((cat) => {'idCategoria': cat.idCategoria}).toList(),
+      'categorias':  state.categorias//!.map((cat) => {'idCategoria': 1}).toList(),
     };
     print('productoForm idProductos ${state.idProductos} ');
     print('productoForm productLike ${productLike} ');

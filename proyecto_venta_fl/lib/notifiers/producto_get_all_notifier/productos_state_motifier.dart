@@ -24,12 +24,10 @@ class ProductosNotifier extends StateNotifier<ProductosState> {
 
   Future<bool> crearOrUpdateProductos(Map<String, dynamic> productoLike) async {
     try {
-    
-   print('object||||||||||||| ${productoLike}' );
+  
 
       final product = await productoRepositories.createUpdateProductos(productoLike);
 
-   print('object||||||||||||| ${product.idProductos}' );
     
 
       //  final productos1 = ProductoMapper.jsonToEntity(product as Map<String, dynamic>);

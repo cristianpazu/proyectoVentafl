@@ -6,4 +6,5 @@ class Baseurl {
 static final String actualizarProducto = '/productos/actualizar';
 static final String registrarProducto = '/productos/registrarProductos';
  static final String consultarCategoria = '/categoria/traerporAll';
+ static final String consultarStock = '/stock/traerporAll';
 }

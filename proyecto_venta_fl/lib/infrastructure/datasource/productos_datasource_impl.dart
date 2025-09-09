@@ -26,8 +26,7 @@ class ProductosDatasourceImpl extends ProductoDatasource {
 
 if ( methos ==  'POST') {
     responseJson = await HttpService(url).postRegisterHttp(productLike, methos);
-    print('responseJson $responseJson');
-    print('responseJson productLike$productLike');
+
 
 }else{
   responseJson = await HttpService(url).putHttp(productLike, methos);
@@ -36,12 +35,6 @@ if ( methos ==  'POST') {
 
       final producto = ProductosResponse.fromJson(responseJson);
 
-
-
-
-
-
-       print('productoproducto $producto');
       return producto;
     } catch (e, stackTrace) {
       print('Error en createUpdateProductos: $e');
@@ -64,7 +57,6 @@ if ( methos ==  'POST') {
         productos.add(ProductoMapper.jsonToEntity(element));
       }
 
-      print('<<<<<<<<<object>>>>>>>>>>><< ${productos.length}');
 
       return productos;
 
@@ -88,10 +80,9 @@ if ( methos ==  'POST') {
           Baseurl.consultarProductoId.replaceFirst('{id}', id.toString());
 
       final respuesta = await HttpService(url).getHttp();
-      print('>>>>>>>>respuesta<<<<<<<<<<<<<<<<<<< ${respuesta}');
 
       final productos = Productos.fromJson(respuesta);
-      print('>>>>>>>>productos<<<<<<<<<<<<<<<<<<< ${productos.toJson()}');
+
 
       //final productos = ProductoMapper.jsonToEntity(respuesta);
 

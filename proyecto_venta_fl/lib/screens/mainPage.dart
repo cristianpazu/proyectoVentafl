@@ -1,7 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_venta_fl/screens/paginaprueb.dart';
+import 'package:proyecto_venta_fl/screens/pedidos_screen.dart';
+import 'package:proyecto_venta_fl/screens/stocks_screen.dart';
 import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 
 class Mainpage extends ConsumerStatefulWidget {
@@ -14,9 +15,10 @@ class Mainpage extends ConsumerStatefulWidget {
 class _MainPageState extends ConsumerState<Mainpage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
+  final List<Widget> _pages =  [
     ProductosView(),
     MyWidget(),
+    PedidosScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -58,6 +60,10 @@ class _MainPageState extends ConsumerState<Mainpage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Ver pagos',
+          ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Pedidos',
           ),
         ],
       ), 

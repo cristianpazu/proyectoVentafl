@@ -45,13 +45,11 @@ class ProductoNotifier extends StateNotifier<ProductoState> {
 
   Future<void> loadProducto() async {
     try {
-      if (state.idProductos == 999999) {
-     
+     if ( state.idProductos ==  999999 ) {
         state = state.copyWith(
           isLoading: false,
           producto: newEmptyProducto(),
-        );
-  print('objectobject ${state.producto?.toJson()}');
+        );  
         return;
       }
 

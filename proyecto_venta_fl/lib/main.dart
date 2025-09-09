@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:proyecto_venta_fl/router/app_router.dart';
 import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 import 'package:proyecto_venta_fl/utils/baseUrl.dart';
 import 'package:proyecto_venta_fl/utils/http.dart';
 import 'package:proyecto_venta_fl/widget/product_card.dart';
-
-void main() {
-  runApp(ProviderScope(child: const MyApp()));
+import 'package:flutter_localizations/flutter_localizations.dart'; 
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('es_ES', null); 
+  runApp(
+    
+    ProviderScope(
+      
+      child: const MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -25,6 +32,16 @@ class MyApp extends ConsumerWidget {
       title: 'Flutter Demo',
      
       debugShowCheckedModeBanner: false,
+       locale: const Locale('es', 'ES'),
+      supportedLocales: const [
+        Locale('es', 'ES'),
+        Locale('en', 'US'), // opcional
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
     );
   }
 }

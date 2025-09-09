@@ -12,12 +12,14 @@ class Stock {
   factory Stock.fromJson(Map<String, dynamic> json) => Stock(
         idStock: json["idStock"] ?? 0,
         cantidadStock: json["cantidadStock"] ?? 0,
-        productos: json["Productos"],
+        productos:json["productos"] != null
+            ? Productos.fromJson(json["productos"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "idStock": idStock,
         "cantidadStock": cantidadStock,
-        "Productos": productos
+        "productos":productos?.toJson(),
       };
 }

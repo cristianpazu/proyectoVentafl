@@ -18,20 +18,10 @@ class HttpService {
     }
   }
 
-
-    Future putHttp(Map<String, dynamic>producto, String method ) async {
+  Future putHttp(Map<String, dynamic> producto, String method) async {
     try {
-
-
-      final response = await dio.put(
-        '${Baseurl.baseUrl}${endPoint}',
-        data: producto,
-        options: Options(
-          method: method
-        )
-        );
-
-
+      final response = await dio.put('${Baseurl.baseUrl}${endPoint}',
+          data: producto, options: Options(method: method));
 
       return response.data;
     } catch (e) {
@@ -41,21 +31,14 @@ class HttpService {
   }
   //
 
-  Future postRegisterHttp(Map<String, dynamic>producto, String method ) async {
+  Future postRegisterHttp(Map<String, dynamic> producto, String method) async {
     try {
+      final response = await dio.post('${Baseurl.baseUrl}${endPoint}',
+          data: producto, options: Options(method: method));
 
-
-      final response = await dio.post(
-        '${Baseurl.baseUrl}${endPoint}',
-        data: producto,
-        options: Options(
-          method: method
-        )
-        );
-
-print('response.data ${response.data}');
-
-      return response.data;
+      print('response.data ${response.data}');
+return Map<String, dynamic>.from(response.data);
+      //return response.data as Map<String, dynamic>;
     } catch (e) {
       print('Error: $e');
       return {}; // O puedes lanzar una excepción si prefieres
