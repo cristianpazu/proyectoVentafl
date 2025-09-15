@@ -23,6 +23,8 @@ class ProductoScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     
     final productoState = ref.watch(productoProvider(productoId));
+final titulos = productoState.idProductos == 999999 ? 'Registro Producto' : 'Editar Producto';
+
 
    void showSnackBar(BuildContext context){
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -34,7 +36,7 @@ class ProductoScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar Producto'),
+        title: Text('$titulos'),
         actions: [],
       ),
       body: productoState.isLoading
@@ -89,7 +91,7 @@ class _ProductInformation extends ConsumerWidget {
    final productoForm = ref.watch(productoActualizarProvider(product));
    
 
-  
+ // 
 
 
     return Padding(

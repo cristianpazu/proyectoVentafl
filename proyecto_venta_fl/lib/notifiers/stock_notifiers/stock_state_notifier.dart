@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/Entities/Stock.dart';
 import 'package:proyecto_venta_fl/domain/repositories/stock_repositories.dart';
 import 'package:proyecto_venta_fl/notifiers/categoria_notifiers/categoria_state.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state.dart';
@@ -34,5 +36,14 @@ class StockNotifier extends StateNotifier<StockState> {
     }
 
     state = state.copyWith(isLoding: false, stock: [...state.stock, ...stock]);
+  }
+
+   void updateStocks(Productos nuevasProductos) {
+    if (state.stock == null) return;
+
+    final updatedProducto =
+        state.stocks!.copyWith(productos: nuevasProductos);
+
+    state = state.copyWith(stocks: updatedProducto);
   }
 }

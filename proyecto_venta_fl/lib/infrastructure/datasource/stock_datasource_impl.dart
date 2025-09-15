@@ -26,4 +26,37 @@ stocks.add(Stock.fromJson(element));
       rethrow;
     }
   }
+  
+  @override
+  Future<Stock> createUpdateProductos(Map<String, dynamic> stockLike) async{
+try{
+  final int? idStock = stockLike['idStock'];
+      final String methos = (idStock == null) ? 'POST' : 'PUT';
+      final String url =
+          (idStock == null) ? Baseurl.registrarStock : Baseurl.actualizarStock;
+    
+  print('productLike $idStock');
+
+      stockLike.remove('idStock');
+     Map<String, dynamic> responseJson;
+
+if ( methos ==  'POST') {
+    responseJson = await HttpService(url).postRegisterHttp(stockLike, methos);
+
+
+}else{
+  responseJson = await HttpService(url).putHttp(stockLike, methos);
+}
+
+
+      final stocks = Stock.fromJson(responseJson);
+
+      return stocks;
+}catch (e, stackTrace) {
+      print('e $e');
+      print('stackTrace $stackTrace');
+
+      rethrow;
+    }
+  }
 }

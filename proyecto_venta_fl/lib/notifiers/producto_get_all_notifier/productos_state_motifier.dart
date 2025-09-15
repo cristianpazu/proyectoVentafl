@@ -60,11 +60,6 @@ class ProductosNotifier extends StateNotifier<ProductosState> {
 
   Future traerProductos() async {
     try {
-
-
-
-
-
       if (state.isLoding) return;
 
       state = state.copyWith(

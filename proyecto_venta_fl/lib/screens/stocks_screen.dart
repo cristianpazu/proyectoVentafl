@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state_notifier.dart';
 
@@ -120,7 +121,11 @@ class _StockState extends ConsumerState {
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Nuevo stock'),
         icon: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+
+      context.push('/stock');
+
+        },
       ),
     );
   }

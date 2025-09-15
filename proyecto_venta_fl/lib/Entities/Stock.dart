@@ -22,4 +22,20 @@ class Stock {
         "cantidadStock": cantidadStock,
         "productos":productos?.toJson(),
       };
+
+      
+  Stock copyWith(
+          {int? idStock,
+
+  int? cantidadStock,
+
+  Productos? productos,
+         }) =>
+      Stock(
+          idStock: idStock ?? this.idStock,
+          cantidadStock: cantidadStock ?? this.cantidadStock,
+          productos: productos ?? this.productos,
+          );
+
+
 }

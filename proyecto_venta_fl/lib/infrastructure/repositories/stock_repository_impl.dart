@@ -16,6 +16,11 @@ StockRepositoryImpl(this.stockDatasource);
   Future<List<Stock>> getAllStock() {
   return stockDatasource.getAllStock();
   }
+  
+  @override
+  Future<Stock> createUpdateProductos(Map<String, dynamic> stockLike) {
+    return stockDatasource.createUpdateProductos(stockLike);
+  }
 
 
 
