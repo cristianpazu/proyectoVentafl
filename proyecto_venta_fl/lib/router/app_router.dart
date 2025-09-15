@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_venta_fl/screens/mainPage.dart';
@@ -26,20 +27,20 @@ final goRouterProvider = Provider((ref) {
   path: '/stock/:id',
   builder: (context, state) {
 final idParam = state.params['id'];
-    final productoId = int.tryParse(idParam!)  ?? 999999; // o lanza error si es obligatorio
+    final stockId = int.tryParse(idParam!)  ?? 999999; // o lanza error si es obligatorio
    
 
-    return StockScreen(productoId: productoId);
+    return StockScreen(stockId: stockId);
   },
 ),
- GoRoute(
+/* GoRoute(
   path: '/stock',
   builder: (context, state) {
 
 
     return StockScreen();
   },
-)
+) */
    /* GoRoute(
       path: '/producto/:id',
       builder: (context, state) => ProductoScreen(
