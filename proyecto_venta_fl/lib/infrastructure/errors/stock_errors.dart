@@ -1,0 +1,3 @@
+class StockNotFound implements Exception{
+
+}

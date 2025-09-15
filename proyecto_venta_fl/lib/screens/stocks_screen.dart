@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state_notifier.dart';
@@ -19,7 +20,6 @@ class _StockState extends ConsumerState {
       final stockNotifier = ref.read(stockProvider.notifier);
       final stocks = ref.read(stockProvider).stock;
 
-  
       // Solo traer si la lista está vacía
       if (stocks.isEmpty) {
         stockNotifier.traerStock();
@@ -110,8 +110,29 @@ class _StockState extends ConsumerState {
                 final stocks = stockFiltrado[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: cardStock(stocks.productos?.nombre ?? '',
-                      stocks.cantidadStock ?? 0),
+                  child: Slidable(
+                    key: ValueKey(stocks.idStock),
+                    endActionPane: ActionPane(motion: const ScrollMotion(), 
+                    children: [
+                        SlidableAction(
+                              borderRadius: BorderRadius.circular(20),
+                              onPressed: (context) {
+                              context
+                                    .push('/stock/${stocks.idStock}');
+                                //context.push('/producto/${producto.idProductos}');
+                              },
+                              backgroundColor:
+                                  const Color.fromRGBO(232, 235, 255, 1),
+                              foregroundColor:
+                                  const Color.fromRGBO(87, 118, 230, 1),
+                              //const Color.fromRGBO(96, 124, 218, 1),
+                              icon: Icons.edit,
+                              label: 'Editar',
+                            ),
+                    ]),
+                    child: cardStock(stocks.productos?.nombre ?? '',
+                        stocks.cantidadStock ?? 0),
+                  ),
                 );
               },
             ),
@@ -122,9 +143,7 @@ class _StockState extends ConsumerState {
         label: Text('Nuevo stock'),
         icon: Icon(Icons.add),
         onPressed: () {
-
-      context.push('/stock');
-
+          context.push('/stock');
         },
       ),
     );

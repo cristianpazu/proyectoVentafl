@@ -3,7 +3,7 @@ import 'package:proyecto_venta_fl/Entities/Productos.dart';
 class StockActualizarState {
  final bool isFormvalid;
   final int? idStock;
-  final String? cantidadStock;
+  final int? cantidadStock;
   final Productos? productos;
 
   StockActualizarState({
@@ -16,7 +16,7 @@ class StockActualizarState {
   StockActualizarState copyWith({
     bool? isFormvalid,
     int? idStock,
-   String? cantidadStock,
+   int? cantidadStock,
    Productos? productos,
   }) =>
       StockActualizarState(

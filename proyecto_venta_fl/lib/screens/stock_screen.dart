@@ -7,7 +7,8 @@ import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state_notifier
 import 'package:proyecto_venta_fl/widget/custom_stock_field.dart';
 
 class StockScreen extends ConsumerWidget {
-  const StockScreen({super.key});
+    final int stockId;
+  const StockScreen({super.key, required this.stockId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -108,7 +109,7 @@ class _StockInformation extends ConsumerWidget {
           ),
 
           const SizedBox(height: 5),
-DropdownExample(productos: ,)
+//DropdownExample(productos: ,)
         ],
       ),
     );

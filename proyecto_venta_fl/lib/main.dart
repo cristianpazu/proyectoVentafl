@@ -35,8 +35,9 @@ class MyApp extends ConsumerWidget {
        locale: const Locale('es', 'ES'),
       supportedLocales: const [
         Locale('es', 'ES'),
-        Locale('en', 'US'), // opcional
+        //Locale('en', 'US'), // opcional
       ],
+      
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

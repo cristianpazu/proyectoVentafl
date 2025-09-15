@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:proyecto_venta_fl/Entities/Stock.dart';
 import 'package:proyecto_venta_fl/domain/datasource/stock_datasource.dart';
+import 'package:proyecto_venta_fl/infrastructure/errors/stock_errors.dart';
 import 'package:proyecto_venta_fl/utils/baseUrl.dart';
 import 'package:proyecto_venta_fl/utils/http.dart';
 
@@ -57,6 +59,33 @@ if ( methos ==  'POST') {
       print('stackTrace $stackTrace');
 
       rethrow;
+    }
+  }
+  
+  @override
+  Future<Stock> getStockById(int id)async {
+     try {
+      final url =
+          Baseurl.consultarStockId.replaceFirst('{id}', id.toString());
+
+      final respuesta = await HttpService(url).getHttp();
+
+      final stocks = Stock.fromJson(respuesta);
+
+
+      //final productos = ProductoMapper.jsonToEntity(respuesta);
+
+      return stocks;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404 || e.response!.statusCode == 500)
+        throw StockNotFound();
+
+      throw Exception();
+    } catch (e, stackTrace) {
+      print('objectstackTrace $e');
+
+      print('objectstackTrace $stackTrace');
+      throw Exception();
     }
   }
 }
