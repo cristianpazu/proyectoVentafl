@@ -14,6 +14,7 @@ class CustomStockField extends StatelessWidget {
   final Function(String)? onChanged;
   final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
+   final bool enabled;
 
   const CustomStockField({super.key, 
     this.isTopField = false, 
@@ -27,7 +28,8 @@ class CustomStockField extends StatelessWidget {
     this.initialValue = '',
     this.onChanged, 
     this.onFieldSubmitted, 
-    this.validator, });
+    this.validator,
+     this.enabled = true,  });
 
 
   @override
@@ -62,6 +64,7 @@ class CustomStockField extends StatelessWidget {
       ),
       child: TextFormField(
         onChanged: onChanged,
+       enabled: enabled,
         onFieldSubmitted: onFieldSubmitted,
         validator: validator,
         obscureText: obscureText,

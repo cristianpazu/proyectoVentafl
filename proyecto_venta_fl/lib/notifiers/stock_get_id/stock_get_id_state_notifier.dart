@@ -3,7 +3,7 @@ import 'package:proyecto_venta_fl/domain/repositories/stock_repositories.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_get_id/stock_get_id_state.dart';
 import 'package:proyecto_venta_fl/providers/stock_repository_provider.dart';
 
-final stockProvider = StateNotifierProvider.autoDispose.family<StockIdNotifier,StockGetIdState,int>((ref, stockId) {
+final stockProviderId = StateNotifierProvider.autoDispose.family<StockIdNotifier,StockGetIdState,int>((ref, stockId) {
   
 
    final stockRepository = ref.watch(stockRepositoryProvider);
@@ -32,7 +32,7 @@ class StockIdNotifier extends StateNotifier<StockGetIdState> {
     try {
      
 
-      final stock =
+      final stock = 
           await stockRepositories.getStockById(state.idStock!);
 
       state = state.copyWith(isLoading: false, stock: stock);

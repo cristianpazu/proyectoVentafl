@@ -29,7 +29,7 @@ final goRouterProvider = Provider((ref) {
 final idParam = state.params['id'];
     final stockId = int.tryParse(idParam!)  ?? 999999; // o lanza error si es obligatorio
    
-
+print('stockId $stockId');
     return StockScreen(stockId: stockId);
   },
 ),
@@ -41,6 +41,8 @@ final idParam = state.params['id'];
     return StockScreen();
   },
 ) */
+
+
    /* GoRoute(
       path: '/producto/:id',
       builder: (context, state) => ProductoScreen(
