@@ -5,6 +5,7 @@ import 'package:proyecto_venta_fl/Entities/Stock.dart';
 import 'package:proyecto_venta_fl/notifiers/producto_get_all_notifier/productos_state_motifier.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_get_id/stock_get_id_state_notifier.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state_notifier.dart';
+import 'package:proyecto_venta_fl/notifiers/stock_register_notifier/stock_actualizar_state_notifier.dart';
 import 'package:proyecto_venta_fl/widget/custom_stock_field.dart';
 import 'package:proyecto_venta_fl/widget/full_screen_loader.dart';
 
@@ -15,6 +16,16 @@ class StockScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
   final stockState = ref.watch(stockProviderId(stockId));
+
+    void showSnackBar(BuildContext context){
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Producto Actualizado'))
+    );
+   }
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('titulos $stockId'),
@@ -27,6 +38,15 @@ class StockScreen extends ConsumerWidget {
           _StockView(stock: stockState.stock!),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+    if (stockState.stock == null) return;
+
+    
+          ref.read(StocksActualizaProvider(stockState.stock!).notifier).onFormSubmit().then((value){
+          if (!value)  return;
+          showSnackBar(context);
+        });
+
+        
 /*  if (productoState.producto == null) return;
 
         ref.read(productoActualizarProvider(productoState.producto!).notifier).onFOrmSubmit().then((value){
@@ -65,7 +85,7 @@ class _StockInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-  //final productoForm = ref.watch(productoActualizarProvider(product));
+  final StockForm = ref.watch(StocksActualizaProvider(stock));
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -86,10 +106,10 @@ class _StockInformation extends ConsumerWidget {
             label: 'Cantidad',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             
-            initialValue: stock.cantidadStock.toString(),
-            // onChanged:(value) => ref.read(productoActualizarProvider(product).notifier).onPrecioVentaChanged(
-             // int.tryParse(value) ?? 0
-             //),
+            initialValue: StockForm.cantidadStock.toString(),
+             onChanged:(value) => ref.read(StocksActualizaProvider(stock).notifier).onCantidadStockChanged(
+              int.tryParse(value) ?? 0
+             ),
           ),
           const SizedBox(height: 5),
         ],

@@ -19,6 +19,44 @@ class StockNotifier extends StateNotifier<StockState> {
     traerStock();
   }
 
+
+  Future<bool> crearOrUpdateProductos(Map<String, dynamic> stockLike) async {
+    try {
+  
+
+      final stock = await stockRepositories.createUpdateStock(stockLike);
+
+    
+
+      //  final productos1 = ProductoMapper.jsonToEntity(product as Map<String, dynamic>);
+
+      final isStockInList = state.stock.any((element) => element.idStock == stock.idStock);
+     
+
+      if (!isStockInList) {
+        state = state.copyWith(stock: [stock, ...state.stock]);
+      
+        return true;
+      }
+
+      state = state.copyWith(
+        stock: state.stock
+            .map((element) => (element.idStock == stock.idStock)
+                ? stock
+                : element)
+            .toList(),
+      );
+
+    
+      return true;
+    } catch (e, stackTrace) {
+      print('Error en crearOrUpdateProductos: $e');
+      print('StackTrace: $stackTrace');
+      return false;
+    }
+  }
+
+
   Future traerStock() async {
     if (state.isLoding) return;
 

@@ -5,5 +5,5 @@ abstract class StockDatasource {
 
      Future<Stock> getStockById(int id);
 
-     Future<Stock> createUpdateProductos(Map<String, dynamic> stockLike);
+     Future<Stock> createUpdateStock(Map<String, dynamic> stockLike);
 }

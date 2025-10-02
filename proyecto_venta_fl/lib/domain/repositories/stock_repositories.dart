@@ -3,5 +3,5 @@ import 'package:proyecto_venta_fl/Entities/Stock.dart';
 abstract class StockRepositories {
    Future<List<Stock>> getAllStock();
     Future<Stock> getStockById(int id);
-    Future<Stock> createUpdateProductos(Map<String, dynamic> stockLike);
+    Future<Stock> createUpdateStock(Map<String, dynamic> stockLike);
 }

@@ -143,7 +143,7 @@ class _StockState extends ConsumerState {
         label: Text('Nuevo stock'),
         icon: Icon(Icons.add),
         onPressed: () {
-          context.push('/stock');
+          context.push('/stock/999999');
         },
       ),
     );

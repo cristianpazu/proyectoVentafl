@@ -26,7 +26,7 @@ factory ProductosResponse.fromJson(Map<String, dynamic> json ) => ProductosRespo
   nombre: json["nombre"]?? "", 
   referencia: json["referencia"]?? "", 
   cantidadStock: json["cantidadStock"] ?? 0,
-  precioVenta: json["precioVenta"]?? 0.0 , 
+  precioVenta: json["precioVenta"]?? 0 , 
   fechaIngreso: json["fechaIngreso"] ?? "",
   observacion: json["observacion"]?? "",
   categoriasConcat:json["categoriasConcat"]

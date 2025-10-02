@@ -18,8 +18,8 @@ StockRepositoryImpl(this.stockDatasource);
   }
   
   @override
-  Future<Stock> createUpdateProductos(Map<String, dynamic> stockLike) {
-    return stockDatasource.createUpdateProductos(stockLike);
+  Future<Stock> createUpdateStock(Map<String, dynamic> stockLike) {
+    return stockDatasource.createUpdateStock(stockLike);
   }
   
   @override

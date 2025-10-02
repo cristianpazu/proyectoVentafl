@@ -17,7 +17,7 @@ class StockDatasourceImpl extends StockDatasource {
       for (var element in respuesta ?? []) {
         print('object element $element');
 
-stocks.add(Stock.fromJson(element));
+        stocks.add(Stock.fromJson(element));
       }
 
       return stocks;
@@ -28,50 +28,46 @@ stocks.add(Stock.fromJson(element));
       rethrow;
     }
   }
-  
+
   @override
-  Future<Stock> createUpdateProductos(Map<String, dynamic> stockLike) async{
-try{
-  final int? idStock = stockLike['idStock'];
+  Future<Stock> createUpdateStock(Map<String, dynamic> stockLike) async {
+    try {
+      final int? idStock = stockLike['idStock'];
       final String methos = (idStock == null) ? 'POST' : 'PUT';
       final String url =
           (idStock == null) ? Baseurl.registrarStock : Baseurl.actualizarStock;
-    
-  print('productLike $idStock');
 
-      stockLike.remove('idStock');
-     Map<String, dynamic> responseJson;
+      print('productLike $idStock');
 
-if ( methos ==  'POST') {
-    responseJson = await HttpService(url).postRegisterHttp(stockLike, methos);
+      //stockLike.remove('idStock');
+      Map<String, dynamic> responseJson;
 
-
-}else{
-  responseJson = await HttpService(url).putHttp(stockLike, methos);
-}
-
+      if (methos == 'POST') {
+        responseJson =
+            await HttpService(url).postRegisterHttp(stockLike, methos);
+      } else {
+        responseJson = await HttpService(url).putHttp(stockLike, methos);
+      }
 
       final stocks = Stock.fromJson(responseJson);
 
       return stocks;
-}catch (e, stackTrace) {
+    } catch (e, stackTrace) {
       print('e $e');
       print('stackTrace $stackTrace');
 
       rethrow;
     }
   }
-  
+
   @override
-  Future<Stock> getStockById(int id)async {
-     try {
-      final url =
-          Baseurl.consultarStockId.replaceFirst('{id}', id.toString());
+  Future<Stock> getStockById(int id) async {
+    try {
+      final url = Baseurl.consultarStockId.replaceFirst('{id}', id.toString());
 
       final respuesta = await HttpService(url).getHttp();
 
       final stocks = Stock.fromJson(respuesta);
-
 
       //final productos = ProductoMapper.jsonToEntity(respuesta);
 
