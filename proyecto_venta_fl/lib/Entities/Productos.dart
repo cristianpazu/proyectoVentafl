@@ -1,4 +1,5 @@
 import 'package:proyecto_venta_fl/Entities/Categoria.dart';
+import 'package:proyecto_venta_fl/Entities/Response/ProductoResponse.dart';
 
 class Productos {
   int? idProductos;
@@ -51,6 +52,26 @@ class Productos {
         "observacion": observacion,
         "categorias": categorias?.map((x) => x.toJson()).toList(),
       };
+factory Productos.fromResponse(ProductosResponse response) {
+  return Productos(
+    idProductos: response.idProductos,
+    nombre: response.nombre,
+    referencia: response.referencia,
+    cantidadStock: response.cantidadStock,
+    precioVenta: response.precioVenta,
+    fechaIngreso: response.fechaIngreso,
+    observacion: response.observacion,
+    
+    // Aquí convertimos categoriasConcat a List<Categoria> si es posible.
+    categorias: (response.categoriasConcat != null && response.categoriasConcat!.isNotEmpty)
+        ? response.categoriasConcat!
+            .split(',') // Divide por coma
+            .map((nombreCategoria) => Categoria(nombreCategoria: nombreCategoria.trim()))
+            .toList()
+        : [],
+  );
+}
+     
 
   Productos copyWith(
           {int? idProductos,

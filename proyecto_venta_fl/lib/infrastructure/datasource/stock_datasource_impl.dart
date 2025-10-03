@@ -37,7 +37,7 @@ class StockDatasourceImpl extends StockDatasource {
       final String url =
           (idStock == null) ? Baseurl.registrarStock : Baseurl.actualizarStock;
 
-      print('productLike $idStock');
+      print('productLike $methos');
 
       //stockLike.remove('idStock');
       Map<String, dynamic> responseJson;

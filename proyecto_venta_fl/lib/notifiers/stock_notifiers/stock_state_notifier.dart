@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/Entities/Response/ProductoResponse.dart';
 import 'package:proyecto_venta_fl/Entities/Stock.dart';
 import 'package:proyecto_venta_fl/domain/repositories/stock_repositories.dart';
 import 'package:proyecto_venta_fl/notifiers/categoria_notifiers/categoria_state.dart';
@@ -26,8 +27,9 @@ class StockNotifier extends StateNotifier<StockState> {
 
       final stock = await stockRepositories.createUpdateStock(stockLike);
 
-    
+    print('stockLike ${stockLike}');
 
+    print('stockLike ${stock.productos?.toJson()}');
       //  final productos1 = ProductoMapper.jsonToEntity(product as Map<String, dynamic>);
 
       final isStockInList = state.stock.any((element) => element.idStock == stock.idStock);
@@ -83,5 +85,8 @@ class StockNotifier extends StateNotifier<StockState> {
         state.stocks!.copyWith(productos: nuevasProductos);
 
     state = state.copyWith(stocks: updatedProducto);
+  }
+    void seleccionarProducto(ProductosResponse producto) {
+    state = state.copyWith(productoSeleccionado: producto);
   }
 }

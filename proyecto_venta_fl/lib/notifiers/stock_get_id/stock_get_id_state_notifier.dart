@@ -46,7 +46,7 @@ final List<ProductosResponse> productoDisponibles = listProductoState.productos;
 
 
 
-    final as = Stock(idStock: 999999, listProductos:[ productosPorDefecto]);
+    final as = Stock(idStock: 999999, productos: productosDisponibles);
 
     print('>>>>>>>>>>><<<<<<<<<<<<< ${as.toJson()}');
     return as;
@@ -55,6 +55,8 @@ final List<ProductosResponse> productoDisponibles = listProductoState.productos;
   Future<void> loadStock() async {
     try {
       if (state.idStock == 999999) {
+       
+       print('entre aquiiiiiiiiiii ${state.idStock}');
         state = state.copyWith(
           isLoading: false,
           stock: newEmptyProducto(),

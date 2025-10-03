@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
+import 'package:proyecto_venta_fl/Entities/Response/ProductoResponse.dart';
 import 'package:proyecto_venta_fl/Entities/Stock.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_notifiers/stock_state_notifier.dart';
 import 'package:proyecto_venta_fl/notifiers/stock_register_notifier/stock_actualizar_state.dart';
@@ -39,6 +40,9 @@ class StockActualizarStateNotifier extends StateNotifier<StockActualizarState> {
       'productos': state.productos
     };
 
+
+    print('stockLike $stockLike');
+
  try {
       return await onSubmitCallback!(stockLike);
         
@@ -56,5 +60,9 @@ class StockActualizarStateNotifier extends StateNotifier<StockActualizarState> {
 
   void onProducto(Productos productos) {
     state = state.copyWith(productos: productos);
+  }
+
+    void seleccionarProducto(ProductosResponse producto) {
+    state = state.copyWith(productoSeleccionado: producto);
   }
 }
