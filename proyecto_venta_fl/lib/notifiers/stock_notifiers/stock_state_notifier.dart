@@ -36,7 +36,7 @@ class StockNotifier extends StateNotifier<StockState> {
      
 
       if (!isStockInList) {
-        state = state.copyWith(stock: [stock, ...state.stock]);
+        state = state.copyWith(stock: [ ...state.stock,stock]);
       
         return true;
       }

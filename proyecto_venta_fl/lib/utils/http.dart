@@ -18,12 +18,12 @@ class HttpService {
     }
   }
 
-  Future putHttp(Map<String, dynamic> producto, String method) async {
+  Future<Map<String, dynamic>> putHttp(Map<String, dynamic> producto, String method) async {
     try {
+ print('response.data ${producto.toString()}');
       final response = await dio.put('${Baseurl.baseUrl}${endPoint}',
           data: producto, options: Options(method: method));
-
-      return response.data;
+      return Map<String, dynamic>.from(response.data);
     } catch (e) {
       print('Error: $e');
       return {}; // O puedes lanzar una excepción si prefieres

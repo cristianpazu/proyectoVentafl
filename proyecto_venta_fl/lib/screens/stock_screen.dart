@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:proyecto_venta_fl/Entities/Productos.dart';
 import 'package:proyecto_venta_fl/Entities/Response/ProductoResponse.dart';
 import 'package:proyecto_venta_fl/Entities/Stock.dart';
@@ -83,21 +84,19 @@ class _StockInformation extends ConsumerWidget {
 
     final productosState = ref.watch(productosProvider);
     //inal productos = productosState.productos;
-  //final List<Productos>? productos = productosState.productos;
+    //final List<Productos>? productos = productosState.productos;
 
-final List<Productos> productos = (productosState.productos ?? [])
-    .map((p) => Productos.fromResponse(p))
-    .toList();
+    final List<Productos> productos = (productosState.productos ?? [])
+        .map((p) => Productos.fromResponse(p))
+        .toList();
 
     final isLoading = productosState.isLoding;
-   
 
-print('producto21.nombre>>>>>>>>>>> ${productos}');
+    print('producto21.nombre>>>>>>>>>>> ${productos}');
 
+    final productoSeleccionado = ref.watch(stockProvider).productoSeleccionado;
 
-final productoSeleccionado = ref.watch(stockProvider).productoSeleccionado;
-
-    //   
+    //
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -107,44 +106,33 @@ final productoSeleccionado = ref.watch(stockProvider).productoSeleccionado;
           const SizedBox(height: 15),
           const Text('Informacion del producto'),
           const SizedBox(height: 15),
-         
-         StockForm.idStock == 999999 ?
-         
-         (isLoading
-      ? CircularProgressIndicator()
-      : DropdownButtonFormField<Productos>(
-          isExpanded: true,
-          value: productos.first,
-          decoration: const InputDecoration(
-            labelText: 'Nombre del Producto',
-            border: OutlineInputBorder(),
-          ),
-          items: productos?.map((producto21) {
-            return DropdownMenuItem<Productos>(
-              value: producto21,
-              child: Text(producto21.nombre ?? ''),
-            );
-          }).toList(), 
-          onChanged: (value) {
-             print('producto21.nombre>>>>>>>>>>> ${value?.toJson()}');
-            ref.read(StocksActualizaProvider(stock).notifier).onProducto(value!);
-          },  /*(ProductosResponse? nuevoProducto) {
-            if (nuevoProducto != null) {
-               print('producto21.nombre>>>>>>>>>>> ${nuevoProducto.toJson()}');
-             ref.read(StocksActualizaProvider(stock).notifier).seleccionarProducto(nuevoProducto);
-            }
-          }, */
-        ))
-
- :
-           CustomStockField(
-            isTopField: true,
-            label: 'Nombre del Producto',
-            enabled: false,
-           initialValue: stock.productos?.nombre ?? '',
-          //  onChanged: ref.read(productoActualizarProvider(product).notifier).onNombreChanged,
-          ),
-const SizedBox(height: 5),
+          StockForm.idStock == 999999
+              ? (isLoading
+                  ? CircularProgressIndicator()
+                  : DropdownButtonFormField<int>(
+                      value: StockForm.productos?.idProductos,
+                      items: productos.map((p) {
+                        return DropdownMenuItem<int>(
+                          value: p.idProductos,
+                          child: Text(p.nombre ?? ''),
+                        );
+                      }).toList(),
+                      onChanged: (idSeleccionado) {
+                        final productoSeleccionado = productos
+                            .firstWhere((p) => p.idProductos == idSeleccionado);
+                        ref
+                            .read(StocksActualizaProvider(stock).notifier)
+                            .onProducto(productoSeleccionado);
+                      },
+                    ))
+              : CustomStockField(
+                  isTopField: true,
+                  label: 'Nombre del Producto',
+                  enabled: false,
+                  initialValue: stock.productos?.nombre ?? '',
+                  //  onChanged: ref.read(productoActualizarProvider(product).notifier).onNombreChanged,
+                ),
+          const SizedBox(height: 5),
           CustomStockField(
             isBottomField: true,
             label: 'Cantidad',

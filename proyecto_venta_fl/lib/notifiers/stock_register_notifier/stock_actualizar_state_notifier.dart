@@ -35,9 +35,9 @@ class StockActualizarStateNotifier extends StateNotifier<StockActualizarState> {
  if (onSubmitCallback == null) return false;
 
     final stockLike = {
-      'idStock': state.idStock,
+      'idStock': (state.idStock == 999999) ? null : state.idStock,
       'cantidadStock': state.cantidadStock,
-      'productos': state.productos
+      'productos': (state.productos?.toJson() ?? {}) as Map<String, dynamic>,
     };
 
 
@@ -62,7 +62,7 @@ class StockActualizarStateNotifier extends StateNotifier<StockActualizarState> {
     state = state.copyWith(productos: productos);
   }
 
-    void seleccionarProducto(ProductosResponse producto) {
-    state = state.copyWith(productoSeleccionado: producto);
+    void seleccionarProducto(Productos producto) {
+    state = state.copyWith(productos: producto);
   }
 }
