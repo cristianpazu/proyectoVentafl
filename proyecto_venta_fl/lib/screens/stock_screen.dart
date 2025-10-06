@@ -18,16 +18,20 @@ class StockScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stockState = ref.watch(stockProviderId(stockId));
+final titulos = stockState.idStock == 999999 ? 'Registro Stock' : 'Editar Stock';
+
 
     void showSnackBar(BuildContext context) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Producto Actualizado')));
+          .showSnackBar(SnackBar(content: 
+          stockState.idStock == 999999 ? Text('Stock Registrado') :
+          Text('Stock Actualizado')));
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('titulos $stockId'),
+        title: Text('$titulos'),
         actions: [],
       ),
       body: stockState.isLoading
@@ -45,12 +49,7 @@ class StockScreen extends ConsumerWidget {
             showSnackBar(context);
           });
 
-/*  if (productoState.producto == null) return;
 
-        ref.read(productoActualizarProvider(productoState.producto!).notifier).onFOrmSubmit().then((value){
-          if (!value)  return;
-          showSnackBar(context);
-        });*/
         },
         child: Icon(Icons.save_as_outlined),
       ),
@@ -65,7 +64,7 @@ class _StockView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final productoForm = ref.watch(productoActualizarProvider(product));
+ 
     return ListView(
       children: [
         _StockInformation(stock: stock),
@@ -92,9 +91,16 @@ class _StockInformation extends ConsumerWidget {
 
     final isLoading = productosState.isLoding;
 
-    print('producto21.nombre>>>>>>>>>>> ${productos}');
+  
 
-    final productoSeleccionado = ref.watch(stockProvider).productoSeleccionado;
+    final stockState = ref.watch(stockProvider);
+    final List<Productos> productosRegistrados = stockState.stock
+        .map((s) => s.productos)
+        .whereType<Productos>()
+        .toList();
+
+    final List<int?> idsRegistrados =
+        productosRegistrados.map((p) => p.idProductos).toList();
 
     //
 
@@ -104,30 +110,49 @@ class _StockInformation extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 15),
-          const Text('Informacion del producto'),
+          const Text('Informacion del stock'),
           const SizedBox(height: 15),
           StockForm.idStock == 999999
               ? (isLoading
                   ? CircularProgressIndicator()
-                  : DropdownButtonFormField<int>(
-                      value: StockForm.productos?.idProductos,
-                      items: productos.map((p) {
-                        return DropdownMenuItem<int>(
-                          value: p.idProductos,
-                          child: Text(p.nombre ?? ''),
+                  : DropdownButtonFormField<Productos>(
+                      isExpanded: true,
+                      value: productos.contains(StockForm.productos)
+                          ? StockForm.productos
+                          : null,
+                      decoration: const InputDecoration(
+                        labelText: 'Nombre del stock',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: productos.map((producto) {
+                        final bool estaRegistrado =
+                            idsRegistrados.contains(producto.idProductos);
+
+                        return DropdownMenuItem<Productos>(
+                          value: estaRegistrado
+                              ? null
+                              : producto, // null deshabilita funcionalmente
+                          enabled: !estaRegistrado,
+                          child: Text(
+                            producto.nombre ?? '',
+                            style: TextStyle(
+                              color:
+                                  estaRegistrado ? Colors.grey : Colors.black,
+                            ),
+                          ),
                         );
                       }).toList(),
-                      onChanged: (idSeleccionado) {
-                        final productoSeleccionado = productos
-                            .firstWhere((p) => p.idProductos == idSeleccionado);
-                        ref
-                            .read(StocksActualizaProvider(stock).notifier)
-                            .onProducto(productoSeleccionado);
+                      onChanged: (value) {
+                        if (value != null) {
+                          ref
+                              .read(StocksActualizaProvider(stock).notifier)
+                              .onProducto(value);
+                        }
                       },
                     ))
               : CustomStockField(
                   isTopField: true,
-                  label: 'Nombre del Producto',
+                  label: 'Nombre del stock',
                   enabled: false,
                   initialValue: stock.productos?.nombre ?? '',
                   //  onChanged: ref.read(productoActualizarProvider(product).notifier).onNombreChanged,
@@ -135,9 +160,9 @@ class _StockInformation extends ConsumerWidget {
           const SizedBox(height: 5),
           CustomStockField(
             isBottomField: true,
-            label: 'Cantidad',
+            label: 'Cantidad del stock',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            initialValue: StockForm.cantidadStock.toString(),
+            initialValue: StockForm.cantidadStock.toString() ?? '0',
             onChanged: (value) => ref
                 .read(StocksActualizaProvider(stock).notifier)
                 .onCantidadStockChanged(int.tryParse(value) ?? 0),
@@ -149,33 +174,4 @@ class _StockInformation extends ConsumerWidget {
   }
 }
 
-/*
-class DropdownExample extends ConsumerWidget {
 
-final Productos productos;
-
-
-
-  String selectedValue = 'Opción 1';
-  List<String> options = ['Opción 1', 'Opción 2', 'Opción 3'];
-   DropdownExample({required this.productos});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
- final productoState = ref.watch(productosProvider);
-  final producto = productoState.productos;
-
-    return DropdownButton<String>(
-      value: selectedValue,
-      onChanged: (String? newValue) {
-        ref.read(stockProvider.notifier).updateStocks ;
-      },
-      items: options.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-}*/

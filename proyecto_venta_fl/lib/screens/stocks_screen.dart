@@ -179,8 +179,8 @@ class _StockState extends ConsumerState {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(title),
-                        Text(cantidadStock.toString()),
+                        Text('Nombre del producto: ${title}'),
+                        Text('Cantidad del stock: ${cantidadStock.toString()}'),
                       ],
                     ),
                   ),
