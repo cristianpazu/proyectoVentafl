@@ -104,6 +104,21 @@ class _StockInformation extends ConsumerWidget {
 
     //
 
+    final List<Productos> productosDisponibles = productos
+    .where((p) => !idsRegistrados.contains(p.idProductos))
+    .toList();
+
+// Verificamos si el producto del formulario todavía está disponible
+Productos? selectedProducto;
+
+try {
+  selectedProducto = productosDisponibles.firstWhere(
+    (p) => p.idProductos == StockForm.productos?.idProductos,
+  );
+} catch (e) {
+  selectedProducto = null;
+  debugPrint('⚠️ El producto ya no está disponible en el dropdown.');
+}
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -116,40 +131,26 @@ class _StockInformation extends ConsumerWidget {
               ? (isLoading
                   ? CircularProgressIndicator()
                   : DropdownButtonFormField<Productos>(
-                      isExpanded: true,
-                      value: productos.contains(StockForm.productos)
-                          ? StockForm.productos
-                          : null,
-                      decoration: const InputDecoration(
-                        labelText: 'Nombre del stock',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: productos.map((producto) {
-                        final bool estaRegistrado =
-                            idsRegistrados.contains(producto.idProductos);
-
-                        return DropdownMenuItem<Productos>(
-                          value: estaRegistrado
-                              ? null
-                              : producto, // null deshabilita funcionalmente
-                          enabled: !estaRegistrado,
-                          child: Text(
-                            producto.nombre ?? '',
-                            style: TextStyle(
-                              color:
-                                  estaRegistrado ? Colors.grey : Colors.black,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value != null) {
-                          ref
-                              .read(StocksActualizaProvider(stock).notifier)
-                              .onProducto(value);
-                        }
-                      },
-                    ))
+            isExpanded: true,
+            value: selectedProducto,
+            decoration: const InputDecoration(
+              labelText: 'Nombre del stock',
+              border: OutlineInputBorder(),
+            ),
+            items: productosDisponibles.map((producto) {
+              return DropdownMenuItem<Productos>(
+                value: producto,
+                child: Text(producto.nombre ?? ''),
+              );
+            }).toList(),
+            onChanged: (value) {
+              if (value != null) {
+                ref
+                    .read(StocksActualizaProvider(stock).notifier)
+                    .onProducto(value);
+              }
+            },
+          ))
               : CustomStockField(
                   isTopField: true,
                   label: 'Nombre del stock',
