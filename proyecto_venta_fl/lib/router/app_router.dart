@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_venta_fl/screens/mainPage.dart';
+import 'package:proyecto_venta_fl/screens/pedido_screen.dart';
 import 'package:proyecto_venta_fl/screens/producto_screen.dart';
 import 'package:proyecto_venta_fl/screens/productos_screen.dart';
 import 'package:proyecto_venta_fl/screens/stock_screen.dart';
@@ -33,6 +34,17 @@ print('stockId $stockId');
     return StockScreen(stockId: stockId);
   },
 ),
+GoRoute(
+  path: '/pedido',
+  builder: (context, state) {
+
+   
+
+    return PedidoScreen();
+  },
+),
+
+
 /* GoRoute(
   path: '/stock',
   builder: (context, state) {

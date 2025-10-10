@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class PedidosScreen extends StatefulWidget {
@@ -73,6 +74,13 @@ List<Map<String, dynamic>> get _itemsFiltrados {
         : 'Selecciona una fecha';
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+ 
+context.push('/pedido');
+        },
+        child: Icon(Icons.add_box_outlined),
+      ),
       appBar: AppBar(
         title: Text('Pedidos'),
          actions: [
