@@ -24,10 +24,11 @@ class _PedidoScreenState extends ConsumerState {
       // ref.read(productosProvider.notifier).traerProductos();
     });
   }
-
+    int valor = 0;
   @override
   Widget build(BuildContext context) {
     final productosState = ref.watch(productosProvider);
+
     return Scaffold(
         appBar: AppBar(
           actions: [
@@ -82,8 +83,7 @@ class _PedidoScreenState extends ConsumerState {
                       child: Container(
                           height: 85,
                           decoration: BoxDecoration(
-                              color: Colors
-                                  .blue,
+                              color: Colors.blue,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           child: Column(
@@ -91,10 +91,9 @@ class _PedidoScreenState extends ConsumerState {
                               Padding(
                                 padding: const EdgeInsets.all(2.0),
                                 child: Row(
-                                     mainAxisAlignment: MainAxisAlignment
+                                  mainAxisAlignment: MainAxisAlignment
                                       .center, // Centra en el eje horizontal
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       '${producto.nombre}',
@@ -111,25 +110,114 @@ class _PedidoScreenState extends ConsumerState {
                                 ),
                               ),
                               Container(
-                                width: 150,
-                                height: 50,
-                               decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(10)
-                               ),
+                              
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .center, // Centra en el eje horizontal
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .center, // Centra en el eje vertical
+                                   mainAxisAlignment: MainAxisAlignment
+                                            .center, // Centra en el eje horizontal
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Centra en el eje vertical
                                   children: [
-                                    Expanded(
-                                     child: 
-                                        TextButton(
-                                            onPressed: () {},
-                                            child: Text('agregar producto'))
-                                   
-                                    )
+                                    Container(
+                                      width: 150,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center, // Centra en el eje horizontal
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Centra en el eje vertical
+                                        children: [
+                                          Expanded(
+                                              child: TextButton(
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                      'agregar producto'))),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center, // Centra en el eje horizontal
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Centra en el eje vertical
+                                        children: [
+                                          Expanded(
+                                            child: TextButton(
+                                                onPressed: () {  setState(() {
+                                                    valor++; 
+                                                  });},
+                                                child: Text('+')),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                     SizedBox(
+                                      width: 10,
+                                    ),
+//
+ Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center, // Centra en el eje horizontal
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Centra en el eje vertical
+                                        children: [
+                                          Expanded(
+                                            child: TextButton(
+                                                onPressed: () {
+                                                
+                                                },
+                                                child: Text('${valor}')),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+//
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center, // Centra en el eje horizontal
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Centra en el eje vertical
+                                        children: [
+                                          Expanded(
+                                            child: TextButton(
+                                                onPressed: () {  setState(() {
+                                                    valor--; 
+                                                  });},
+                                                child: Text('-')),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               )
